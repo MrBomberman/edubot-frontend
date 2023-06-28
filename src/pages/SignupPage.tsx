@@ -17,6 +17,7 @@ import { useEffect, useState } from 'react';
 // import classes from './styles/loginPage.module.css';
 import { useNavigate } from 'react-router-dom';
 import routerUrls from '../constants/routerUrls';
+import inputValidator from '../utils/common/inputValidator';
 // import login from '../utils/login/login';
 
 function Copyright(props: any) {
@@ -34,8 +35,10 @@ function Copyright(props: any) {
 
 export default function SignupPage() {
 
-  const [username , setName] = useState('');
-  const [password, setPassword] = useState('');
+  const [login , setLogin] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
+  const [submitClick, setSubmitClick] = useState<number>(0)
   const navigate = useNavigate();
 
     // useEffect(() => {
@@ -44,8 +47,9 @@ export default function SignupPage() {
 
     // }, [username, password])
 
-    function mainLogin(e){
+    function mainLogin(e:any){
       e.preventDefault();
+      setSubmitClick(1)
       try {
           // login('/api/auth/login', username, password).then(res => {
           //   // console.log(res)
@@ -62,6 +66,8 @@ export default function SignupPage() {
           console.log(e)
       }
     }
+
+    console.log(submitClick)
 
     return (
         <Container component="main" sx={{
@@ -91,37 +97,43 @@ export default function SignupPage() {
           <Box component="form" noValidate sx={{ mt: 1 }}>
             <TextField
               margin="normal"
+              error={submitClick == 0 || login.length != 0 ? false : true}
               required
               fullWidth
               id="login"
               label="Login"
               autoFocus
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e) => setLogin(e.target.value)}
+              helperText={inputValidator(login)}
             />
             <TextField
               margin="normal"
+              error={submitClick == 0 || email.length != 0 ? false : true}
               required
               fullWidth
               id="email"
               label="Email"
               type="email"
-            //   onChange={(e) => setName(e.target.value)}
+              onChange={(e) => setEmail(e.target.value)}
+              helperText={inputValidator(email)}
             />
             <TextField
               margin="normal"
+              error={submitClick == 0 || password.length != 0 ? false : true}
               required
               fullWidth
               label="Password"
               type="password"
               id="password"
               onChange={(e) => setPassword(e.target.value)}
+              helperText={inputValidator(password)}
             />
             <Button
-              type="submit"
+              // type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-            //   onClick={(e) => mainLogin(e)}
+              onClick={(e) => mainLogin(e)}
             >
               Sign Up
             </Button>
