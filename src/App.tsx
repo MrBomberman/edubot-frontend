@@ -6,6 +6,8 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 // import HistoryPage from "./pages/HistoryPage";
 // import KVGroupPage from "./pages/KVGroupPage";
 import LoginPage from "./pages/LoginPage";
+import routerUrls from "./constants/routerUrls";
+import SignupPage from "./pages/SignupPage";
 // import PageWithListOfAnyStatusKVGroup from "./pages/PageWithListOfAnyStatusKVGroup";
 // import NotFound from "./pages/NotFound";
 // import {store} from './store/store.js'
@@ -16,11 +18,14 @@ function App() : JSX.Element {
     // <Provider>
       <Router>
         <Routes>
-          <Route exact path='/login' element={<LoginPage/>} />
 
-          <Route exact path="/" element={<div>Hello</div>}/>
+          <Route path={routerUrls.home} element={<div>Hello</div>}/>
 
-          {/* <Route exact path='/new' element={<PrivateRoute>
+          <Route path={routerUrls.authLogin} element={<LoginPage/>} />
+
+          <Route path={routerUrls.authRegistration} element={<SignupPage/>}/>
+
+          {/* <Route path='/new' element={<PrivateRoute>
             <PageWithListOfAnyStatusKVGroup statusPage={'New'}/>
           </PrivateRoute>} />       
 

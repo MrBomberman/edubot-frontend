@@ -14,7 +14,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { useEffect, useState } from 'react';
 // import { createTheme, ThemeProvider } from '@mui/material/styles';
-import classes from './styles/loginPage.module.css';
+// import classes from './styles/loginPage.module.css';
 import { useNavigate } from 'react-router-dom';
 import routerUrls from '../constants/routerUrls';
 // import login from '../utils/login/login';
@@ -32,7 +32,7 @@ function Copyright(props: any) {
     );
   }
 
-export default function LoginPage() {
+export default function SignupPage() {
 
   const [username , setName] = useState('');
   const [password, setPassword] = useState('');
@@ -44,24 +44,24 @@ export default function LoginPage() {
 
     // }, [username, password])
 
-    // function mainLogin(e){
-    //   e.preventDefault();
-    //   try {
-    //       login('/api/auth/login', username, password).then(res => {
-    //         // console.log(res)
-    //           if(res.hasOwnProperty('token')){
-    //             localStorage.setItem('token', res.token )
-    //             navigate('/')
-    //               // setError(true)
-    //           } else {
-    //               // setError(false)
-    //               return
-    //           }
-    //       })
-    //   } catch(e){
-    //       console.log(e)
-    //   }
-    // }
+    function mainLogin(e){
+      e.preventDefault();
+      try {
+          // login('/api/auth/login', username, password).then(res => {
+          //   // console.log(res)
+          //     if(res.hasOwnProperty('token')){
+          //       localStorage.setItem('token', res.token )
+          //       navigate('/')
+          //         // setError(true)
+          //     } else {
+          //         // setError(false)
+          //         return
+          //     }
+          // })
+      } catch(e){
+          console.log(e)
+      }
+    }
 
     return (
         <Container component="main" sx={{
@@ -86,7 +86,7 @@ export default function LoginPage() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Sign up
           </Typography>
           <Box component="form" noValidate sx={{ mt: 1 }}>
             <TextField
@@ -97,6 +97,15 @@ export default function LoginPage() {
               label="Login"
               autoFocus
               onChange={(e) => setName(e.target.value)}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email"
+              type="email"
+            //   onChange={(e) => setName(e.target.value)}
             />
             <TextField
               margin="normal"
@@ -114,7 +123,7 @@ export default function LoginPage() {
               sx={{ mt: 3, mb: 2 }}
             //   onClick={(e) => mainLogin(e)}
             >
-              Sign In
+              Sign Up
             </Button>
 
           </Box>
@@ -125,8 +134,8 @@ export default function LoginPage() {
                 </Link>
               </Grid>
               <Grid item>
-                <Link to={routerUrls.authRegistration}>
-                  {"Don't have an account? Sign Up"}
+                <Link to={routerUrls.authLogin}>
+                  {"Already have an account? Sign in"}
                 </Link>
               </Grid>
             </Grid>
