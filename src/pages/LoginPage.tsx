@@ -6,7 +6,7 @@ import TextField from '@mui/material/TextField';
 // import FormControlLabel from '@mui/material/FormControlLabel';
 // import Checkbox from '@mui/material/Checkbox';
 // import Link from '@mui/material/Link';
-import { Link } from "react-router-dom";
+import { Link, useNavigation } from "react-router-dom";
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -18,6 +18,9 @@ import classes from './styles/loginPage.module.css';
 import { useNavigate } from 'react-router-dom';
 import routerUrls from '../constants/routerUrls';
 import inputValidator from '../utils/common/inputValidator';
+import { useDispatch } from 'react-redux';
+import { AUTH_TOKEN } from '../store/authentication/authReducer';
+import Cookies from 'js-cookie';
 // import login from '../utils/login/login';
 
 function Copyright(props: any) {
@@ -40,24 +43,35 @@ export default function LoginPage() {
   const [email, setEmail] = useState<string>('');
   const [submitClick, setSubmitClick] = useState<number>(0)
   const navigate = useNavigate();
-  
+
+  const dispatch = useDispatch();
+
+  // const navigate = useNavigation();
+
     function mainLogin(e:any){
       e.preventDefault();
       setSubmitClick(1)
-      try {
-          // login('/api/auth/login', username, password).then(res => {
-          //   // console.log(res)
-          //     if(res.hasOwnProperty('token')){
-          //       localStorage.setItem('token', res.token )
-          //       navigate('/')
-          //         // setError(true)
-          //     } else {
-          //         // setError(false)
-          //         return
-          //     }
-          // })
-      } catch(e){
-          console.log(e)
+      if(login.length != 0 && email.length != 0) {
+        try {
+          const token = 'rjjgkbnlrrtn';
+          Cookies.set('authToken', token);
+  
+  
+          setTimeout(() => navigate('/home'), 500)
+            // login('/api/auth/login', username, password).then(res => {
+            //   // console.log(res)
+            //     if(res.hasOwnProperty('token')){
+            //       localStorage.setItem('token', res.token )
+            //       navigate('/')
+            //         // setError(true)
+            //     } else {
+            //         // setError(false)
+            //         return
+            //     }
+            // })
+        } catch(e){
+            console.log(e)
+        }
       }
     }
 

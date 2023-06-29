@@ -18,6 +18,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import routerUrls from '../constants/routerUrls';
 import inputValidator from '../utils/common/inputValidator';
+import Cookies from 'js-cookie';
 // import login from '../utils/login/login';
 
 function Copyright(props: any) {
@@ -44,20 +45,25 @@ export default function SignupPage() {
     function mainLogin(e:any){
       e.preventDefault();
       setSubmitClick(1)
-      try {
-          // login('/api/auth/login', username, password).then(res => {
-          //   // console.log(res)
-          //     if(res.hasOwnProperty('token')){
-          //       localStorage.setItem('token', res.token )
-          //       navigate('/')
-          //         // setError(true)
-          //     } else {
-          //         // setError(false)
-          //         return
-          //     }
-          // })
-      } catch(e){
-          console.log(e)
+      if(login.length != 0 && email.length != 0 && email.length != 0){
+        try {
+
+          const token = 'rjjgkbnlrrtn';
+          Cookies.set('authToken', token);
+            // login('/api/auth/login', username, password).then(res => {
+            //   // console.log(res)
+            //     if(res.hasOwnProperty('token')){
+            //       localStorage.setItem('token', res.token )
+            //       navigate('/')
+            //         // setError(true)
+            //     } else {
+            //         // setError(false)
+            //         return
+            //     }
+            // })
+        } catch(e){
+            console.log(e)
+        }
       }
     }
 
