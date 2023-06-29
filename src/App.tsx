@@ -11,6 +11,7 @@ import SignupPage from "./pages/SignupPage";
 // import PageWithListOfAnyStatusKVGroup from "./pages/PageWithListOfAnyStatusKVGroup";
 // import NotFound from "./pages/NotFound";
 import {store} from './store/store.ts'
+import PrivateRoute from "./components/PrivateRoute/index.tsx";
 
 
 function App() : JSX.Element {
@@ -19,7 +20,9 @@ function App() : JSX.Element {
       <Router>
         <Routes>
 
-          <Route path={routerUrls.home} element={<div>Hello</div>}/>
+          <Route path="/" element={<Navigate to="/home" />}/>
+
+          <Route path={routerUrls.home} element={<PrivateRoute>Hello</PrivateRoute>}/>
 
           <Route path={routerUrls.authLogin} element={<LoginPage/>} />
 

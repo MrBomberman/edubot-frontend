@@ -1,5 +1,5 @@
 class routerUrls {
-	home = '/';
+	home = '/home';
 	authRegistration = '/signup';
 	authLogin = '/login';
 }
