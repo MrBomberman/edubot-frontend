@@ -12,6 +12,7 @@ import SignupPage from "./pages/SignupPage";
 // import NotFound from "./pages/NotFound";
 import {store} from './store/store.ts'
 import PrivateRoute from "./components/PrivateRoute/index.tsx";
+import ChatUI from "./components/ChatUI/index.tsx";
 
 
 function App() : JSX.Element {
@@ -22,7 +23,7 @@ function App() : JSX.Element {
 
           <Route path="/" element={<Navigate to="/home" />}/>
 
-          <Route path={routerUrls.home} element={<PrivateRoute>Hello</PrivateRoute>}/>
+          <Route path={routerUrls.home} element={<PrivateRoute><ChatUI/></PrivateRoute>}/>
 
           <Route path={routerUrls.authLogin} element={<LoginPage/>} />
 
