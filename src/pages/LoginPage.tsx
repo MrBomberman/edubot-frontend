@@ -6,7 +6,7 @@ import TextField from '@mui/material/TextField';
 // import FormControlLabel from '@mui/material/FormControlLabel';
 // import Checkbox from '@mui/material/Checkbox';
 // import Link from '@mui/material/Link';
-import { Link, useNavigation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -40,24 +40,23 @@ export default function LoginPage() {
 
   const [login , setLogin] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const [email, setEmail] = useState<string>('');
   const [submitClick, setSubmitClick] = useState<number>(0)
   const navigate = useNavigate();
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   // const navigate = useNavigation();
 
-    function mainLogin(e:any){
+    function mainLogin(e : any){
       e.preventDefault();
       setSubmitClick(1)
-      if(login.length != 0 && email.length != 0) {
+      if(login.length != 0 && password.length != 0) {
         try {
           const token = 'rjjgkbnlrrtn';
           Cookies.set('authToken', token);
   
   
-          setTimeout(() => navigate('/home'), 500)
+          setTimeout(() => navigate('/home'), 200)
             // login('/api/auth/login', username, password).then(res => {
             //   // console.log(res)
             //     if(res.hasOwnProperty('token')){

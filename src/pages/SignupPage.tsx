@@ -51,7 +51,7 @@ export default function SignupPage() {
           const token = 'rjjgkbnlrrtn';
           Cookies.set('authToken', token);
 
-          setTimeout(() => navigate('/home'), 500)
+          setTimeout(() => navigate('/home'), 200)
             // login('/api/auth/login', username, password).then(res => {
             //   // console.log(res)
             //     if(res.hasOwnProperty('token')){
