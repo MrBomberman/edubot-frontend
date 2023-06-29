@@ -1,4 +1,4 @@
-// import { Provider } from "react-redux";
+import { Provider } from "react-redux";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom"
 // import CircleLoader from "./components/CircleLoader";
 // import NavigationPanel from "./components/NavigationPanel";
@@ -10,12 +10,12 @@ import routerUrls from "./constants/routerUrls";
 import SignupPage from "./pages/SignupPage";
 // import PageWithListOfAnyStatusKVGroup from "./pages/PageWithListOfAnyStatusKVGroup";
 // import NotFound from "./pages/NotFound";
-// import {store} from './store/store.js'
+import {store} from './store/store.ts'
 
 
 function App() : JSX.Element {
   return (
-    // <Provider>
+    <Provider store={store}>
       <Router>
         <Routes>
 
@@ -48,7 +48,7 @@ function App() : JSX.Element {
         </Routes>
       
       </Router>
-    // </Provider>
+    </Provider>
   );
 }
 
