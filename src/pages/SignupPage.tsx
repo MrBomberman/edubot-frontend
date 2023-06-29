@@ -41,12 +41,6 @@ export default function SignupPage() {
   const [submitClick, setSubmitClick] = useState<number>(0)
   const navigate = useNavigate();
 
-    // useEffect(() => {
-    //   console.log(username);
-    //   console.log(password)
-
-    // }, [username, password])
-
     function mainLogin(e:any){
       e.preventDefault();
       setSubmitClick(1)
@@ -104,7 +98,7 @@ export default function SignupPage() {
               label="Login"
               autoFocus
               onChange={(e) => setLogin(e.target.value)}
-              helperText={inputValidator(login)}
+              helperText={submitClick == 0 ? '' : inputValidator(login)}
             />
             <TextField
               margin="normal"
@@ -115,7 +109,7 @@ export default function SignupPage() {
               label="Email"
               type="email"
               onChange={(e) => setEmail(e.target.value)}
-              helperText={inputValidator(email)}
+              helperText={submitClick == 0 ? '' : inputValidator(email)}
             />
             <TextField
               margin="normal"
@@ -126,10 +120,10 @@ export default function SignupPage() {
               type="password"
               id="password"
               onChange={(e) => setPassword(e.target.value)}
-              helperText={inputValidator(password)}
+              helperText={submitClick == 0 ? '' : inputValidator(password)}
             />
             <Button
-              // type="submit"
+              type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}

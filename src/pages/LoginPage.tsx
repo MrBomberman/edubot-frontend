@@ -17,6 +17,7 @@ import { useEffect, useState } from 'react';
 import classes from './styles/loginPage.module.css';
 import { useNavigate } from 'react-router-dom';
 import routerUrls from '../constants/routerUrls';
+import inputValidator from '../utils/common/inputValidator';
 // import login from '../utils/login/login';
 
 function Copyright(props: any) {
@@ -34,34 +35,31 @@ function Copyright(props: any) {
 
 export default function LoginPage() {
 
-  const [username , setName] = useState('');
-  const [password, setPassword] = useState('');
+  const [login , setLogin] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
+  const [submitClick, setSubmitClick] = useState<number>(0)
   const navigate = useNavigate();
-
-    // useEffect(() => {
-    //   console.log(username);
-    //   console.log(password)
-
-    // }, [username, password])
-
-    // function mainLogin(e){
-    //   e.preventDefault();
-    //   try {
-    //       login('/api/auth/login', username, password).then(res => {
-    //         // console.log(res)
-    //           if(res.hasOwnProperty('token')){
-    //             localStorage.setItem('token', res.token )
-    //             navigate('/')
-    //               // setError(true)
-    //           } else {
-    //               // setError(false)
-    //               return
-    //           }
-    //       })
-    //   } catch(e){
-    //       console.log(e)
-    //   }
-    // }
+  
+    function mainLogin(e:any){
+      e.preventDefault();
+      setSubmitClick(1)
+      try {
+          // login('/api/auth/login', username, password).then(res => {
+          //   // console.log(res)
+          //     if(res.hasOwnProperty('token')){
+          //       localStorage.setItem('token', res.token )
+          //       navigate('/')
+          //         // setError(true)
+          //     } else {
+          //         // setError(false)
+          //         return
+          //     }
+          // })
+      } catch(e){
+          console.log(e)
+      }
+    }
 
     return (
         <Container component="main" sx={{
@@ -89,30 +87,34 @@ export default function LoginPage() {
             Sign in
           </Typography>
           <Box component="form" noValidate sx={{ mt: 1 }}>
-            <TextField
+          <TextField
               margin="normal"
+              error={submitClick == 0 || login.length != 0 ? false : true}
               required
               fullWidth
               id="login"
               label="Login"
               autoFocus
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e) => setLogin(e.target.value)}
+              helperText={submitClick == 0 ? '' : inputValidator(login)}
             />
             <TextField
               margin="normal"
+              error={submitClick == 0 || password.length != 0 ? false : true}
               required
               fullWidth
               label="Password"
               type="password"
               id="password"
               onChange={(e) => setPassword(e.target.value)}
+              helperText={submitClick == 0 ? '' : inputValidator(password)}
             />
             <Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-            //   onClick={(e) => mainLogin(e)}
+              onClick={(e) => mainLogin(e)}
             >
               Sign In
             </Button>
