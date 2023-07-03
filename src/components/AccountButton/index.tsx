@@ -80,7 +80,7 @@ export default function AccountButton() {
             >
                 <MenuItem
                     onClick={() => {
-                        Cookies.remove("authToken");
+                        Cookies.remove("access_token");
                         localStorage.clear();
                         navigate("/login");
                     }}

@@ -6,9 +6,9 @@ import Cookies from "js-cookie";
 
 export default function PrivateRoute({children} : any){
 
-    const authToken : string | undefined = Cookies.get('authToken');
+    const access_token : string | undefined = Cookies.get('access_token');
 
-    return Boolean(authToken) ?
+    return Boolean(access_token) ?
     <NavigationPanel>
                 {children}
     </NavigationPanel>
