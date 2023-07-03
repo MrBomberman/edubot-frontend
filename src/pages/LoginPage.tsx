@@ -21,6 +21,8 @@ import inputValidator from '../utils/common/inputValidator';
 import { useDispatch } from 'react-redux';
 import { AUTH_TOKEN } from '../store/authentication/authReducer';
 import Cookies from 'js-cookie';
+import authentication from '../api/post-data/authentication';
+import LoadingButton from '@mui/lab/LoadingButton';
 // import login from '../utils/login/login';
 
 function Copyright(props: any) {
@@ -41,6 +43,8 @@ export default function LoginPage() {
   const [login , setLogin] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [submitClick, setSubmitClick] = useState<number>(0)
+  const [loading, setLoading] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>('');
   const navigate = useNavigate();
 
   // const dispatch = useDispatch();
@@ -51,23 +55,24 @@ export default function LoginPage() {
       e.preventDefault();
       setSubmitClick(1)
       if(login.length != 0 && password.length != 0) {
+        setLoading(true)
         try {
-          const token = 'rjjgkbnlrrtn';
-          Cookies.set('authToken', token);
-  
-  
-          setTimeout(() => navigate('/home'), 200)
-            // login('/api/auth/login', username, password).then(res => {
-            //   // console.log(res)
-            //     if(res.hasOwnProperty('token')){
-            //       localStorage.setItem('token', res.token )
-            //       navigate('/')
-            //         // setError(true)
-            //     } else {
-            //         // setError(false)
-            //         return
-            //     }
-            // })
+          const objLogin = {
+            login: login,
+            password: password
+          }
+          authentication("http://localhost:8000/api/v1/auth/login", objLogin)
+            .then(res => {
+              if(Boolean(res.status_code) && res.status_code !== 200){
+                setErrorMessage(res.msg)
+              } else {
+                setErrorMessage('');
+                Cookies.set('access_token', res.msg.access_token);
+                navigate('/home')
+              }
+              setLoading(false)
+            })
+            .catch((e) => console.log(e))
         } catch(e){
             console.log(e)
         }
@@ -122,16 +127,17 @@ export default function LoginPage() {
               onChange={(e) => setPassword(e.target.value)}
               helperText={submitClick == 0 ? '' : inputValidator(password)}
             />
-            <Button
+            <LoadingButton
               type="submit"
               fullWidth
               variant="contained"
+              loading={loading}
               sx={{ mt: 3, mb: 2 }}
               onClick={(e) => mainLogin(e)}
             >
               Sign In
-            </Button>
-
+            </LoadingButton>
+          <Typography sx={{marginBottom: '10px', textAlign: 'center'}} color="red" >{errorMessage}</Typography>
           </Box>
           <Grid container>
               <Grid item xs>

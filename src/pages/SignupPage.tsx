@@ -19,6 +19,9 @@ import { useNavigate } from 'react-router-dom';
 import routerUrls from '../constants/routerUrls';
 import inputValidator from '../utils/common/inputValidator';
 import Cookies from 'js-cookie';
+import LoadingButton from '@mui/lab/LoadingButton';
+import authentication from '../api/post-data/authentication';
+
 // import login from '../utils/login/login';
 
 function Copyright(props: any) {
@@ -37,39 +40,43 @@ function Copyright(props: any) {
 export default function SignupPage() {
 
   const [login , setLogin] = useState<string>('');
+  const [name , setName] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [submitClick, setSubmitClick] = useState<number>(0)
+  const [loading, setLoading] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>('');
   const navigate = useNavigate();
 
     function mainLogin(e:any){
       e.preventDefault();
       setSubmitClick(1)
-      if(login.length != 0 && email.length != 0 && email.length != 0){
+      if(login.length != 0 && email.length != 0 && password.length != 0 && name.length !== 0){
+        setLoading(true)
         try {
-
-          const token = 'rjjgkbnlrrtn';
-          Cookies.set('authToken', token);
-
-          setTimeout(() => navigate('/home'), 200)
-            // login('/api/auth/login', username, password).then(res => {
-            //   // console.log(res)
-            //     if(res.hasOwnProperty('token')){
-            //       localStorage.setItem('token', res.token )
-            //       navigate('/')
-            //         // setError(true)
-            //     } else {
-            //         // setError(false)
-            //         return
-            //     }
-            // })
-        } catch(e){
+          const objSignUP = {
+            login: login,
+            name: name,
+            email: email,
+            password: password
+          }
+          authentication("http://localhost:8000/api/v1/auth/signup", objSignUP)
+            .then(res => {
+              if(Boolean(res.status_code) && res.status_code !== 201){
+                setErrorMessage(res.msg)
+              } else {
+                setErrorMessage('');
+                navigate('/login')
+              }
+              setLoading(false)
+            })
+            .catch((e) => console.log(e))
+          }
+          catch(e){
             console.log(e)
         }
       }
     }
-
-    console.log(submitClick)
 
     return (
         <Container component="main" sx={{
@@ -110,6 +117,17 @@ export default function SignupPage() {
             />
             <TextField
               margin="normal"
+              error={submitClick == 0 || name.length != 0 ? false : true}
+              required
+              fullWidth
+              id="name"
+              label="Name"
+              autoFocus
+              onChange={(e) => setName(e.target.value)}
+              helperText={submitClick == 0 ? '' : inputValidator(name)}
+            />
+            <TextField
+              margin="normal"
               error={submitClick == 0 || email.length != 0 ? false : true}
               required
               fullWidth
@@ -130,16 +148,17 @@ export default function SignupPage() {
               onChange={(e) => setPassword(e.target.value)}
               helperText={submitClick == 0 ? '' : inputValidator(password)}
             />
-            <Button
+            <LoadingButton
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              loading={loading}
               onClick={(e) => mainLogin(e)}
             >
               Sign Up
-            </Button>
-
+            </LoadingButton>
+            <Typography sx={{marginBottom: '10px', textAlign: 'center'}} color="red" >{errorMessage}</Typography>
           </Box>
           <Grid container>
               <Grid item xs>
