@@ -123,7 +123,7 @@ export default function MiniDrawer({children} : any) {
           </IconButton>
         <Toolbar sx={{display: 'flex', justifyContent: 'space-between', width: '100%'}}>
           <Typography variant="h6" noWrap component="div">
-            Boston Edubot
+            Boston the Edubot
           </Typography>
 
         <Typography sx={{display: 'flex'}} noWrap component="div">
@@ -190,7 +190,7 @@ export default function MiniDrawer({children} : any) {
           ))}
         </List> */}
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 , width: { sm: `calc(100% - ${drawerWidth}px)` }}}>
+      <Box component="main" sx={{ flexGrow: 1, p: 3 , width: { sm: `calc(100% - ${drawerWidth}px)` }, height: '100vh'}}>
         <DrawerHeader />
         {children}
       </Box>

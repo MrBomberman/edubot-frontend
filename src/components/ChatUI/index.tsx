@@ -33,7 +33,7 @@ const ChatUI = () => {
   return (
     <Box
       sx={{
-        height: "85vh",
+        height: "83vh",
         display: "flex",
         flexDirection: "column",
         bgcolor: "grey.200",
