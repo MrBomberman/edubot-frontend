@@ -68,6 +68,7 @@ export default function LoginPage() {
               } else {
                 setErrorMessage('');
                 Cookies.set('access_token', res.msg.access_token);
+                Cookies.set('refresh_token', res.msg.refresh_token);
                 navigate('/home')
               }
               setLoading(false)
