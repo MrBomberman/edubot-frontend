@@ -92,7 +92,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-export default function MiniDrawer({children} : any) {
+export default function NavigationPanel({children} : any) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
@@ -140,7 +140,7 @@ export default function MiniDrawer({children} : any) {
           </IconButton>
         </DrawerHeader>
         <Divider />
-        <List>
+        {/* <List>
           {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
             <ListItem key={text} disablePadding sx={{ display: 'block' }}>
               <ListItemButton
@@ -164,7 +164,7 @@ export default function MiniDrawer({children} : any) {
             </ListItem>
           ))}
         </List>
-        <Divider />
+        <Divider /> */}
         {/* <List>
           {['All mail', 'Trash', 'Spam'].map((text, index) => (
             <ListItem key={text} disablePadding sx={{ display: 'block' }}>
