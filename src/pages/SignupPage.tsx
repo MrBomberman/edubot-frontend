@@ -21,6 +21,7 @@ import inputValidator from '../utils/common/inputValidator';
 import Cookies from 'js-cookie';
 import LoadingButton from '@mui/lab/LoadingButton';
 import authentication from '../api/post-data/authentication';
+import BasicModal from '../shared/common/ModalWindow';
 
 // import login from '../utils/login/login';
 
@@ -174,6 +175,8 @@ export default function SignupPage() {
             </Grid>
             <Copyright sx={{ mt: 4, mb: 1 }} />
         </Box>
+      {/* TODO - functionality to relocate user to home page and automatic login after signup successfully  */}
+        <BasicModal/>
       </Container>
     )
 }
