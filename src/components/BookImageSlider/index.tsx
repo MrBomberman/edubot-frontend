@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {useState} from 'react'
 import Box from '@mui/material/Box';
 import { useTheme } from '@mui/material/styles';
 import MobileStepper from '@mui/material/MobileStepper';
@@ -8,6 +8,7 @@ import Button from '@mui/material/Button';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import Divider from '@mui/material/Divider'
+import ModalWindow from '../../shared/common/ModalWindow';
 
 const steps = [
     {
@@ -34,8 +35,12 @@ const steps = [
 
 export default function TextMobileStepper() {
   const theme = useTheme();
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [activeStep, setActiveStep] = useState(0);
   const maxSteps = steps.length;
+
+  // for modal window
+  const [openModal, setOpenModal] = useState(false);
+  const handleClose = () => setOpenModal(false)
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -80,7 +85,11 @@ export default function TextMobileStepper() {
                   width: '100%',
                   backgroundPosition: '50%',
                   backgroundRepeat: 'no-repeat',
-                  backgroundSize: 'cover'
+                  backgroundSize: 'cover',
+                  cursor: 'pointer'
+                }}
+                onClick={() => {
+                  setOpenModal(true)
                 }}
                 src={step.imgPath}
                 alt={step.label}
@@ -120,6 +129,7 @@ export default function TextMobileStepper() {
         }
       />
         </Box>
+        <ModalWindow openModal={openModal} handleClose={handleClose}/>
     </Box>
   );
 }
