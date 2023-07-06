@@ -21,7 +21,7 @@ import inputValidator from '../utils/common/inputValidator';
 import Cookies from 'js-cookie';
 import LoadingButton from '@mui/lab/LoadingButton';
 import authentication from '../api/post-data/authentication';
-import BasicModal from '../shared/common/ModalWindow';
+import ModalWindow from '../shared/common/ModalWindow';
 
 // import login from '../utils/login/login';
 
@@ -46,10 +46,14 @@ export default function SignupPage() {
   const [email, setEmail] = useState<string>('');
   const [submitClick, setSubmitClick] = useState<number>(0)
   const [loading, setLoading] = useState<boolean>(false);
+  const [loginLoading, setLoginLoading] = useState<boolean>(false)
   const [errorMessage, setErrorMessage] = useState<string>('');
   const navigate = useNavigate();
+  // for modal window
+  const [openModal, setOpenModal] = useState(false);
+  const handleClose = () => setOpenModal(false)
 
-    function mainLogin(e:any){
+    function signUP(e:any){
       e.preventDefault();
       setSubmitClick(1)
       if(login.length != 0 && email.length != 0 && password.length != 0 && name.length !== 0){
@@ -67,13 +71,43 @@ export default function SignupPage() {
                 setErrorMessage(res.msg)
               } else {
                 setErrorMessage('');
-                navigate('/login')
+                setOpenModal(true)
+                // navigate('/login')
               }
               setLoading(false)
             })
             .catch((e) => console.log(e))
           }
           catch(e){
+            console.log(e)
+        }
+      }
+    }
+
+    function mainLogin(e:any){
+      e.preventDefault();
+      setSubmitClick(1)
+      if(login.length != 0 && password.length != 0) {
+        setLoginLoading(true)
+        try {
+          const objLogin = {
+            login: login,
+            password: password
+          }
+          authentication("http://localhost:8000/api/v1/auth/login", objLogin)
+            .then(res => {
+              if(Boolean(res.status_code) && (res.status_code !== 200)){
+                setErrorMessage(res.msg)
+              } else {
+                setErrorMessage('');
+                Cookies.set('access_token', res.msg.access_token);
+                Cookies.set('refresh_token', res.msg.refresh_token);
+                navigate('/home')
+              }
+              setLoginLoading(false)
+            })
+            .catch((e) => console.log(e))
+        } catch(e){
             console.log(e)
         }
       }
@@ -155,7 +189,7 @@ export default function SignupPage() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
               loading={loading}
-              onClick={(e) => mainLogin(e)}
+              onClick={(e) => signUP(e)}
             >
               Sign Up
             </LoadingButton>
@@ -176,7 +210,17 @@ export default function SignupPage() {
             <Copyright sx={{ mt: 4, mb: 1 }} />
         </Box>
       {/* TODO - functionality to relocate user to home page and automatic login after signup successfully  */}
-        <BasicModal/>
+        <ModalWindow textTitle="Ypu successfully sign up!" 
+        mainText="Let's begin studying!"
+        openModal={openModal}
+        handleClose={handleClose}
+        buttonElem={<LoadingButton 
+        loading={loginLoading}
+        onClick={(e) => {
+          mainLogin(e)
+        }}
+        variant="contained"
+        >GO</LoadingButton>}/>
       </Container>
     )
 }
