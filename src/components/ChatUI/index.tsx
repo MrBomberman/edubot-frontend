@@ -13,39 +13,43 @@ import postMessage from "../../api/post-data/postMessage";
 import { LoadingButton } from "@mui/lab";
 import robot from '../../images/robot.png';
 
-const messages = [
-  { id: Math.random()*2 , text: "Hello dear Student, welcome to your personalized tutoring program. Our team consists of world class tutors who will guide you to excel and be among the top 1% of students worldwide. Our main focus will be the Cambridge Academic program, preparing you for IGCSE exams.", sender: "assistant" },  { id: Math.random()*2 , text: "Hello dear Student, welcome to your personalized tutoring program. Our team consists of world class tutors who will guide you to excel and be among the top 1% of students worldwide. Our main focus will be the Cambridge Academic program, preparing you for IGCSE exams.", sender: "assistant" },
-  { id: Math.random()*2 , text: "Hello dear Student, welcome to your personalized tutoring program. Our team consists of world class tutors who will guide you to excel and be among the top 1% of students worldwide. Our main focus will be the Cambridge Academic program, preparing you for IGCSE exams.", sender: "assistant" },
-  { id: Math.random()*2 , text: "Hello dear Student, welcome to your personalized tutoring program. Our team consists of world class tutors who will guide you to excel and be among the top 1% of students worldwide. Our main focus will be the Cambridge Academic program, preparing you for IGCSE exams.", sender: "assistant" },
-  { id: Math.random()*2 , text: "Hello dear Student, welcome to your personalized tutoring program. Our team consists of world class tutors who will guide you to excel and be among the top 1% of students worldwide. Our main focus will be the Cambridge Academic program, preparing you for IGCSE exams.", sender: "assistant" },
-  { id: Math.random()*2 , text: "Hello dear Student, welcome to your personalized tutoring program. Our team consists of world class tutors who will guide you to excel and be among the top 1% of students worldwide. Our main focus will be the Cambridge Academic program, preparing you for IGCSE exams.", sender: "assistant" },
-  { id: Math.random()*2 , text: "Hello dear Student, welcome to your personalized tutoring program. Our team consists of world class tutors who will guide you to excel and be among the top 1% of students worldwide. Our main focus will be the Cambridge Academic program, preparing you for IGCSE exams.", sender: "assistant" },
-  { id: Math.random()*2 , text: "Hello dear Student, welcome to your personalized tutoring program. Our team consists of world class tutors who will guide you to excel and be among the top 1% of students worldwide. Our main focus will be the Cambridge Academic program, preparing you for IGCSE exams.", sender: "assistant" },
-  { id: Math.random()*2 , text: "Hello dear Student, welcome to your personalized tutoring program. Our team consists of world class tutors who will guide you to excel and be among the top 1% of students worldwide. Our main focus will be the Cambridge Academic program, preparing you for IGCSE exams.", sender: "assistant" },
-  { id: Math.random()*2 , text: "Hello dear Student, welcome to your personalized tutoring program. Our team consists of world class tutors who will guide you to excel and be among the top 1% of students worldwide. Our main focus will be the Cambridge Academic program, preparing you for IGCSE exams.", sender: "assistant" },
-  { id: Math.random()*2 , text: "Hello dear Student, welcome to your personalized tutoring program. Our team consists of world class tutors who will guide you to excel and be among the top 1% of students worldwide. Our main focus will be the Cambridge Academic program, preparing you for IGCSE exams.", sender: "assistant" },
-
-];
+// const messages = [
+//   { id: Math.random()*2, text: "Hello dear Student, welcome to your personalized tutoring program. Our team consists of world class tutors who will guide you to excel and be among the top 1% of students worldwide. Our main focus will be the Cambridge Academic program, preparing you for IGCSE exams.", sender: "assistant" },  { id: Math.random()*2 , text: "Hello dear Student, welcome to your personalized tutoring program. Our team consists of world class tutors who will guide you to excel and be among the top 1% of students worldwide. Our main focus will be the Cambridge Academic program, preparing you for IGCSE exams.", sender: "assistant" },
+// ];
 
 const ChatUI = () => {
   const [input, setInput] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 
+  const messages = JSON.parse(sessionStorage.getItem('messages')) || [{ id: Math.random()*2, text: "Hello dear Student, welcome to your personalized tutoring program. Our team consists of world class tutors who will guide you to excel and be among the top 1% of students worldwide. Our main focus will be the Cambridge Academic program, preparing you for IGCSE exams.", sender: "assistant" }]
+
   const messageBlockRef = useRef({});
+  const inputRef = useRef({});
 
   const handleSend = () => {
     if (input.trim() !== "") {
-      setLoading(true)
-      messages.push({id: (Math.random()*3), text: input, sender: 'user'})
-      postMessage("https://bostonbackendengine-sc4x4pjhiq-uc.a.run.app/api/v1/boston/chatbot-reference", input)
-        .then((res) => {
-          messageBlockRef.current.scrollTo(0, messageBlockRef.current.scrollHeight)
-          const textMessageObj = res.filter((item : any) => item.role == 'assistant');
-          const messageFromBot = {id: (Math.random()*2), text: textMessageObj[0].content, sender: textMessageObj[0].role};
-          messages.push(messageFromBot)
-          setLoading(false);
-        })
-      setInput("");
+      if(loading == false) {
+        try {
+          setLoading(true)
+          messages.push({id: (Math.random()*3), text: input, sender: 'user'})
+          sessionStorage.setItem('messages', JSON.stringify(messages))
+          postMessage("https://bostonbackendengine-sc4x4pjhiq-uc.a.run.app/api/v1/boston/chatbot-reference", input)
+            .then((res) => {
+              messageBlockRef.current.scrollTo(0, messageBlockRef.current.scrollHeight)
+              const textMessageObj = res.filter((item : any) => item.role == 'assistant');
+              const messageFromBot = {id: (Math.random()*2), text: textMessageObj[0].content, sender: textMessageObj[0].role};
+              messages.push(messageFromBot)
+              sessionStorage.setItem('messages', JSON.stringify(messages))
+              setLoading(false);
+            }).catch((err) => {
+              console.log(err)
+              setLoading(false);
+            })
+          setInput("");
+        } catch(e) {
+          console.log(e)
+        }
+      }
     }
   };
 
@@ -55,20 +59,28 @@ const ChatUI = () => {
 
   const handleKeyDown = (event: any) => {
     if (input.trim() !== "") {
-      // messageBlockRef.current.scrollTo({top: messageBlockRef.current.scrollHeight})
-      if(event.key == 'Enter'){
-        setLoading(true)
-        messages.push({id: (Math.random()*3), text: input, sender: 'user'})
-        postMessage("https://bostonbackendengine-sc4x4pjhiq-uc.a.run.app/api/v1/boston/chatbot-reference", input)
-          .then((res) => {
-            messageBlockRef?.current.scrollTo(0, messageBlockRef?.current.scrollHeight)
-            console.log('Data: ', res)
-            const textMessageObj = res.filter((item : any) => item.role == 'assistant');
-            const messageFromBot = {id: (Math.random()*2), text: textMessageObj[0].content, sender: textMessageObj[0].role};
-            messages.push(messageFromBot)
-            setLoading(false);
-          })
-        setInput("");
+      if(event.key == 'Enter' && loading == false){
+        try {
+          setLoading(true)
+          messages.push({id: (Math.random()*3), text: input, sender: 'user'})
+          sessionStorage.setItem('messages', JSON.stringify(messages))
+          postMessage("https://bostonbackendengine-sc4x4pjhiq-uc.a.run.app/api/v1/boston/chatbot-reference", input)
+            .then((res) => {
+              messageBlockRef?.current.scrollTo(0, messageBlockRef?.current.scrollHeight)
+              console.log('Data: ', res)
+              const textMessageObj = res.filter((item : any) => item.role == 'assistant');
+              const messageFromBot = {id: (Math.random()*2), text: textMessageObj[0].content, sender: textMessageObj[0].role};
+              messages.push(messageFromBot)
+              sessionStorage.setItem('messages', JSON.stringify(messages))
+              setLoading(false);
+            }).catch((err) => {
+              console.log(err)
+              setLoading(false);
+            })
+          setInput("");
+        } catch(e){
+          console.log(e)
+        }
       }
     }
   }
@@ -97,12 +109,13 @@ const ChatUI = () => {
             <TextField
               size="small"
               fullWidth
+              autoFocus
               placeholder="Type a message"
               variant="outlined"
               value={input}
               onChange={handleInputChange}
               onKeyUp={handleKeyDown}
-              disabled={loading ? true : false}
+              // disabled={loading ? true : false}
             />
           </Grid>
           <Grid item xs={2}>
