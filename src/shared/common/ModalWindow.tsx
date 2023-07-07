@@ -16,15 +16,28 @@ const style = {
   p: 4,
 };
 
+const imageStyle = {
+  position: 'absolute' as 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 600,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+}
+
 type ModalProps = {
-  textTitle: string,
+  textTitle?: string,
   buttonElem?: JSX.Element,
   mainText?: string,
   openModal: boolean,
-  handleClose: () => void
+  handleClose: () => void,
+  imageBook?: JSX.Element
 }
 
-export default function ModalWindow({textTitle, buttonElem, mainText, openModal, handleClose}: ModalProps) {
+export default function ModalWindow({textTitle, buttonElem, mainText, openModal, handleClose, imageBook}: ModalProps) {
   
   return (
     <div>
@@ -34,16 +47,21 @@ export default function ModalWindow({textTitle, buttonElem, mainText, openModal,
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
-          <Typography id="modal-modal-title" sx={{textAlign: 'center'}} variant="h6" component="h2">
-            {textTitle}
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-           {mainText}
-          </Typography>
-          <Box sx={{display: 'flex', justifyContent: 'center'}}>
-            {buttonElem}
-          </Box>
+        <Box sx={Boolean(imageBook) ? imageStyle : style}>
+          {Boolean(imageBook) ? 
+            imageBook :
+            <>
+              <Typography id="modal-modal-title" sx={{textAlign: 'center'}} variant="h6" component="h2">
+                {textTitle}
+              </Typography>
+              <Typography id="modal-modal-description" sx={{ mt: 2, textAlign: 'center', marginBottom: '15px' }}>
+              {mainText}
+              </Typography>
+              <Box sx={{display: 'flex', justifyContent: 'center'}}>
+                {buttonElem}
+              </Box>
+            </>
+          }
         </Box>
       </Modal>
     </div>

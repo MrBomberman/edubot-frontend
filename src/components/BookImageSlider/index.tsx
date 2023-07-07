@@ -9,6 +9,7 @@ import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import Divider from '@mui/material/Divider'
 import ModalWindow from '../../shared/common/ModalWindow';
+import ImageListItem from '@mui/material/ImageListItem';
 
 const steps = [
     {
@@ -33,10 +34,20 @@ const steps = [
       },
 ];
 
+type imageObjProps = {
+  label: string,
+  imgPath: string
+}
+
 export default function TextMobileStepper() {
   const theme = useTheme();
   const [activeStep, setActiveStep] = useState(0);
   const maxSteps = steps.length;
+
+  const [imageCurrentObj, setImageCurrentObj] = useState<imageObjProps>({
+    label: '',
+    imgPath: ''
+  });
 
   // for modal window
   const [openModal, setOpenModal] = useState(false);
@@ -80,7 +91,6 @@ export default function TextMobileStepper() {
                 sx={{
                   height: 505,
                   display: 'block',
-                //   maxWidth: 400,
                   overflow: 'hidden',
                   width: '100%',
                   backgroundPosition: '50%',
@@ -89,9 +99,11 @@ export default function TextMobileStepper() {
                   cursor: 'pointer'
                 }}
                 onClick={() => {
+                  setImageCurrentObj(step)
                   setOpenModal(true)
                 }}
-                src={step.imgPath}
+                src={`${step.imgPath}?w=164&h=164&fit=crop&auto=format`}
+                srcSet={`${step.imgPath}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
                 alt={step.label}
               />
             ) : null}
@@ -129,7 +141,17 @@ export default function TextMobileStepper() {
         }
       />
         </Box>
-        <ModalWindow openModal={openModal} handleClose={handleClose}/>
+        <ModalWindow openModal={openModal} handleClose={handleClose} 
+        imageBook={
+        <ImageListItem key={imageCurrentObj.imgPath}>
+          <img
+            src={`${imageCurrentObj.imgPath}?w=164&h=164&fit=crop&auto=format`}
+            srcSet={`${imageCurrentObj.imgPath}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+            alt={imageCurrentObj.label}
+            loading="lazy"
+          />
+      </ImageListItem>
+    }/>
     </Box>
   );
 }
