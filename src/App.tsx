@@ -13,7 +13,6 @@ import StudyEdubotHome from "./pages/StudyEdubotHome.tsx";
 // import NotFound from "./pages/NotFound";
 import {store} from './store/store.ts'
 import PrivateRoute from "./components/PrivateRoute/index.tsx";
-import ChatUI from "./components/ChatUI/index.tsx";
 
 
 function App() : JSX.Element {
