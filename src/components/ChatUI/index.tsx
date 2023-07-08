@@ -20,7 +20,7 @@ const ChatUI = () => {
   const [input, setInput] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 
-  const messages = JSON.parse(sessionStorage.getItem('messages') || '{}') || [{ id: Math.random()*2, text: "Hello dear Student, welcome to your personalized tutoring program. Our team consists of world class tutors who will guide you to excel and be among the top 1% of students worldwide. Our main focus will be the Cambridge Academic program, preparing you for IGCSE exams.", sender: "assistant" }]
+  const messages = JSON.parse(sessionStorage.getItem('messages') || `[{ "id": ${Math.random()*2}, "text": "Hello dear Student, welcome to your personalized tutoring program. Our team consists of world class tutors who will guide you to excel and be among the top 1% of students worldwide. Our main focus will be the Cambridge Academic program, preparing you for IGCSE exams.", "sender": "assistant" }]`);
 
   const messageBlockRef = useRef({scrollTo, scrollHeight: 0});
 
