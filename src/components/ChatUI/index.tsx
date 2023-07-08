@@ -6,6 +6,7 @@ import {
   Avatar,
   Grid,
   Paper,
+  Button,
 } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import postMessage from "../../api/post-data/postMessage";
@@ -15,11 +16,17 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
+import ModalWindow from "../../shared/common/ModalWindow";
 
 const ChatUI = () => {
   const [input, setInput] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [command, setCommand] = useState<string>('');
+
+  // for modal window
+  const [openModal, setOpenModal] = useState(false);
+  const handleClose = () => setOpenModal(false)
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
   const messages = JSON.parse(sessionStorage.getItem('messages') || `[{ "id": ${Math.random()*2}, "text": "Hello dear Student, welcome to your personalized tutoring program. Our team consists of world class tutors who will guide you to excel and be among the top 1% of students worldwide. Our main focus will be the Cambridge Academic program, preparing you for IGCSE exams.", "sender": "assistant" }]`);
 
@@ -45,8 +52,9 @@ const ChatUI = () => {
             }).catch((err) => {
               messages.pop();
               sessionStorage.setItem('messages', JSON.stringify(messages))
-              console.log(err)
               setLoading(false);
+              setOpenModal(true)
+              setErrorMessage(err.message)
             })
           setCommand("")
           setInput("");
@@ -88,8 +96,9 @@ const ChatUI = () => {
             }).catch((err) => {
               messages.pop();
               sessionStorage.setItem('messages', JSON.stringify(messages))
-              console.log(err)
               setLoading(false);
+              setOpenModal(true);
+              setErrorMessage(err.message)
             })
           setCommand("")
           setInput("");
@@ -166,6 +175,8 @@ const ChatUI = () => {
           </Grid>
         </Grid>
       </Box>
+      <ModalWindow openModal={openModal} handleClose={handleClose} textTitle={errorMessage}
+      buttonElem={<Button onClick={handleClose} color="error" variant="contained">Close</Button>}/>
     </Box>
   );
 };
