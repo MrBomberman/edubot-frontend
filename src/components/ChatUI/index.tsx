@@ -30,16 +30,20 @@ const ChatUI = () => {
         try {
           setLoading(true)
           messages.push({id: (Math.random()*3), text: input, sender: 'user'})
+          messages.push({id: (Math.random()*3), text: 'Loading...', sender: 'assistant'})
           sessionStorage.setItem('messages', JSON.stringify(messages))
           postMessage("https://bostonbackendengine-sc4x4pjhiq-uc.a.run.app/api/v1/boston/chatbot-reference", input)
             .then((res) => {
               messageBlockRef.current.scrollTo(0, messageBlockRef.current.scrollHeight)
               const textMessageObj = res.filter((item : any) => item.role == 'assistant');
               const messageFromBot = {id: (Math.random()*2), text: textMessageObj[0].content, sender: textMessageObj[0].role};
+              messages.pop();
               messages.push(messageFromBot)
               sessionStorage.setItem('messages', JSON.stringify(messages))
               setLoading(false);
             }).catch((err) => {
+              messages.pop();
+              sessionStorage.setItem('messages', JSON.stringify(messages))
               console.log(err)
               setLoading(false);
             })
@@ -55,23 +59,28 @@ const ChatUI = () => {
     setInput(event.target.value);
   };
 
-  const handleKeyDown = (event: any) => {
+  const handleKeyUP = (event: any) => {
     if (input.trim() !== "") {
       if(event.key == 'Enter' && loading == false){
         try {
           setLoading(true)
           messages.push({id: (Math.random()*3), text: input, sender: 'user'})
+          messages.push({id: (Math.random()*3), text: 'Loading...', sender: 'assistant'})
           sessionStorage.setItem('messages', JSON.stringify(messages))
+          messageBlockRef?.current.scrollTo(0, messageBlockRef?.current.scrollHeight)
           postMessage("https://bostonbackendengine-sc4x4pjhiq-uc.a.run.app/api/v1/boston/chatbot-reference", input)
             .then((res) => {
               messageBlockRef?.current.scrollTo(0, messageBlockRef?.current.scrollHeight)
               console.log('Data: ', res)
               const textMessageObj = res.filter((item : any) => item.role == 'assistant');
               const messageFromBot = {id: (Math.random()*2), text: textMessageObj[0].content, sender: textMessageObj[0].role};
+              messages.pop();
               messages.push(messageFromBot)
               sessionStorage.setItem('messages', JSON.stringify(messages))
               setLoading(false);
             }).catch((err) => {
+              messages.pop();
+              sessionStorage.setItem('messages', JSON.stringify(messages))
               console.log(err)
               setLoading(false);
             })
@@ -85,7 +94,7 @@ const ChatUI = () => {
 
   useEffect(() => {
       messageBlockRef.current.scrollTo({top: messageBlockRef.current.scrollHeight, behavior: 'smooth'})
-  }, [messageBlockRef.current.scrollHeight])
+  }, [messageBlockRef.current.scrollHeight, loading])
 
   return (
     <Box
@@ -112,7 +121,7 @@ const ChatUI = () => {
               variant="outlined"
               value={input}
               onChange={handleInputChange}
-              onKeyUp={handleKeyDown}
+              onKeyUp={handleKeyUP}
               // disabled={loading ? true : false}
             />
           </Grid>
