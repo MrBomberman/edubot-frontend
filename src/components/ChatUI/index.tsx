@@ -48,6 +48,7 @@ const ChatUI = () => {
               console.log(err)
               setLoading(false);
             })
+          setCommand("")
           setInput("");
         } catch(e) {
           console.log(e)
@@ -90,6 +91,7 @@ const ChatUI = () => {
               console.log(err)
               setLoading(false);
             })
+          setCommand("")
           setInput("");
         } catch(e){
           console.log(e)
