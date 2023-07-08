@@ -11,14 +11,15 @@ import SendIcon from "@mui/icons-material/Send";
 import postMessage from "../../api/post-data/postMessage";
 import { LoadingButton } from "@mui/lab";
 import robot from '../../images/robot.png';
-
-// const messages = [
-//   { id: Math.random()*2, text: "Hello dear Student, welcome to your personalized tutoring program. Our team consists of world class tutors who will guide you to excel and be among the top 1% of students worldwide. Our main focus will be the Cambridge Academic program, preparing you for IGCSE exams.", sender: "assistant" },  { id: Math.random()*2 , text: "Hello dear Student, welcome to your personalized tutoring program. Our team consists of world class tutors who will guide you to excel and be among the top 1% of students worldwide. Our main focus will be the Cambridge Academic program, preparing you for IGCSE exams.", sender: "assistant" },
-// ];
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
 
 const ChatUI = () => {
   const [input, setInput] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
+  const [command, setCommand] = useState<string>('');
 
   const messages = JSON.parse(sessionStorage.getItem('messages') || `[{ "id": ${Math.random()*2}, "text": "Hello dear Student, welcome to your personalized tutoring program. Our team consists of world class tutors who will guide you to excel and be among the top 1% of students worldwide. Our main focus will be the Cambridge Academic program, preparing you for IGCSE exams.", "sender": "assistant" }]`);
 
@@ -54,6 +55,11 @@ const ChatUI = () => {
       }
     }
   };
+
+  const handleSelectChange = (event:any) => {
+    setCommand(event.target.value)
+    setInput(event.target.value)
+  }
 
   const handleInputChange = (event: any) => {
     setInput(event.target.value);
@@ -111,8 +117,8 @@ const ChatUI = () => {
         ))}
       </Box>
       <Box sx={{ p: 2, backgroundColor: "background.default" }}>
-        <Grid container spacing={2}>
-          <Grid item xs={10}>
+        <Grid container spacing={0} sx={{alignItems: 'center'}}>
+          <Grid item xs={8}>
             <TextField
               size="small"
               fullWidth
@@ -122,8 +128,27 @@ const ChatUI = () => {
               value={input}
               onChange={handleInputChange}
               onKeyUp={handleKeyUP}
-              // disabled={loading ? true : false}
             />
+          </Grid>
+          <Grid item xs={2}>
+          <FormControl sx={{ m: 1, maxWidth: 90, width: '90px' }} size="small">
+          <InputLabel id="demo-select-small-label">Command</InputLabel>
+            <Select
+                labelId="demo-select-small-label"
+                id="demo-select-small"
+                value={command}
+                label="Command"
+                // sx=s
+                onChange={handleSelectChange}
+              >
+                <MenuItem value="">
+                  <em>Command</em>
+                </MenuItem>
+                <MenuItem value={'/quiz'}>/quiz</MenuItem>
+                {/* <MenuItem value={20}></MenuItem> */}
+                {/* <MenuItem value={30}>Thirty</MenuItem> */}
+            </Select>
+            </FormControl>
           </Grid>
           <Grid item xs={2}>
             <LoadingButton
