@@ -13,6 +13,7 @@ import StudyEdubotHome from "./pages/StudyEdubotHome.tsx";
 // import NotFound from "./pages/NotFound";
 import {store} from './store/store.ts'
 import PrivateRoute from "./components/PrivateRoute/index.tsx";
+import PageNotFound from "./pages/PageNotFound.tsx";
 
 
 function App() : JSX.Element {
@@ -28,6 +29,8 @@ function App() : JSX.Element {
           <Route path={routerUrls.authLogin} element={<LoginPage/>} />
 
           <Route path={routerUrls.authRegistration} element={<SignupPage/>}/>
+
+          <Route path="*" element={<PageNotFound/>} />
 
           {/* <Route path='/new' element={<PrivateRoute>
             <PageWithListOfAnyStatusKVGroup statusPage={'New'}/>
