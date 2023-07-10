@@ -62,9 +62,10 @@ export default function LoginPage() {
             login: login,
             password: password
           }
-          authentication("http://localhost:8000/api/v1/auth/login", objLogin)
+          authentication("https://bostonbackendengine-sc4x4pjhiq-uc.a.run.app/api/v1/auth/login", objLogin)
             .then(res => {
               if(Boolean(res.status_code) && res.status_code !== 200){
+                setOpenModal(true)
                 setErrorMessage(res.msg)
               } else {
                 setErrorMessage('');
@@ -73,12 +74,10 @@ export default function LoginPage() {
                 navigate('/home')
               }
               setLoading(false)
-            })
-            .catch((err) => {        
-              console.log(err)
+            }).catch((err) => {        
               setLoading(false);
               setOpenModal(true)
-              setErrorMessage(err.message)
+              setErrorMessage(err.msg)
             })
         } catch(e){
             console.log(e)

@@ -27,7 +27,7 @@ function Copyright(props: any) {
     return (
       <Typography variant="body2" color="text.secondary" align="center" {...props}>
         {'Copyright © '}
-        <Link color="inherit" to="https://mui.com/">
+        <Link color="inherit" to="https://enchanting-dodol-d8f05f.netlify.app/login">
             EduBot
         </Link>{' '}
         {new Date().getFullYear()}
@@ -63,14 +63,17 @@ export default function SignupPage() {
             email: email,
             password: password
           }
-          authentication("http://localhost:8000/api/v1/auth/signup", objSignUP)
+          authentication("https://bostonbackendengine-sc4x4pjhiq-uc.a.run.app/api/v1/auth/signup", objSignUP)
             .then(res => {
-              if(Boolean(res.status_code) && res.status_code !== 201){
-                setErrorMessage(res.msg)
+              if(!Boolean(res.status_code)){
+                setErrorMessage('Something went wrong!')
               } else {
-                setErrorMessage('');
-                setOpenModal(true)
-                // navigate('/login')
+                if(res.status_code !== 201) {
+                  setErrorMessage(res.msg)
+                } else {
+                  setErrorMessage('');
+                  setOpenModal(true)
+                }
               }
               setLoading(false)
             })
@@ -92,7 +95,7 @@ export default function SignupPage() {
             login: login,
             password: password
           }
-          authentication("http://localhost:8000/api/v1/auth/login", objLogin)
+          authentication("https://bostonbackendengine-sc4x4pjhiq-uc.a.run.app/api/v1/auth/login", objLogin)
             .then(res => {
               if(Boolean(res.status_code) && (res.status_code !== 200)){
                 setErrorMessage(res.msg)
@@ -212,6 +215,7 @@ export default function SignupPage() {
         mainText="Let's begin studying!"
         openModal={openModal}
         handleClose={handleClose}
+        errorMessage={errorMessage}
         buttonElem={<LoadingButton 
         loading={loginLoading}
         onClick={(e) => {
