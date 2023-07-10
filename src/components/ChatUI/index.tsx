@@ -6,19 +6,27 @@ import {
   Avatar,
   Grid,
   Paper,
+  Button,
 } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import postMessage from "../../api/post-data/postMessage";
 import { LoadingButton } from "@mui/lab";
 import robot from '../../images/robot.png';
-
-// const messages = [
-//   { id: Math.random()*2, text: "Hello dear Student, welcome to your personalized tutoring program. Our team consists of world class tutors who will guide you to excel and be among the top 1% of students worldwide. Our main focus will be the Cambridge Academic program, preparing you for IGCSE exams.", sender: "assistant" },  { id: Math.random()*2 , text: "Hello dear Student, welcome to your personalized tutoring program. Our team consists of world class tutors who will guide you to excel and be among the top 1% of students worldwide. Our main focus will be the Cambridge Academic program, preparing you for IGCSE exams.", sender: "assistant" },
-// ];
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import ModalWindow from "../../shared/common/ModalWindow";
 
 const ChatUI = () => {
   const [input, setInput] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
+  const [command, setCommand] = useState<string>('');
+
+  // for modal window
+  const [openModal, setOpenModal] = useState(false);
+  const handleClose = () => setOpenModal(false)
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
   const messages = JSON.parse(sessionStorage.getItem('messages') || `[{ "id": ${Math.random()*2}, "text": "Hello dear Student, welcome to your personalized tutoring program. Our team consists of world class tutors who will guide you to excel and be among the top 1% of students worldwide. Our main focus will be the Cambridge Academic program, preparing you for IGCSE exams.", "sender": "assistant" }]`);
 
@@ -44,9 +52,11 @@ const ChatUI = () => {
             }).catch((err) => {
               messages.pop();
               sessionStorage.setItem('messages', JSON.stringify(messages))
-              console.log(err)
               setLoading(false);
+              setOpenModal(true)
+              setErrorMessage(err.message)
             })
+          setCommand("")
           setInput("");
         } catch(e) {
           console.log(e)
@@ -54,6 +64,11 @@ const ChatUI = () => {
       }
     }
   };
+
+  const handleSelectChange = (event : SelectChangeEvent) => {
+    setCommand(event.target.value)
+    setInput(event.target.value)
+  }
 
   const handleInputChange = (event: any) => {
     setInput(event.target.value);
@@ -81,9 +96,11 @@ const ChatUI = () => {
             }).catch((err) => {
               messages.pop();
               sessionStorage.setItem('messages', JSON.stringify(messages))
-              console.log(err)
               setLoading(false);
+              setOpenModal(true);
+              setErrorMessage(err.message)
             })
+          setCommand("")
           setInput("");
         } catch(e){
           console.log(e)
@@ -111,8 +128,8 @@ const ChatUI = () => {
         ))}
       </Box>
       <Box sx={{ p: 2, backgroundColor: "background.default" }}>
-        <Grid container spacing={2}>
-          <Grid item xs={10}>
+        <Grid container spacing={0} sx={{alignItems: 'center'}}>
+          <Grid item xs={12} md={8}>
             <TextField
               size="small"
               fullWidth
@@ -122,10 +139,29 @@ const ChatUI = () => {
               value={input}
               onChange={handleInputChange}
               onKeyUp={handleKeyUP}
-              // disabled={loading ? true : false}
             />
           </Grid>
-          <Grid item xs={2}>
+          <Grid item sm={2} md={2}>
+          <FormControl sx={{ minWidth: 100 }} size="small">
+          <InputLabel id="demo-select-small-label">Command</InputLabel>
+            <Select
+                labelId="demo-select-small-label"
+                id="demo-select-small"
+                value={command}
+                label="Command"
+                // sx=s
+                onChange={handleSelectChange}
+              >
+                <MenuItem value="">
+                  <em>Command</em>
+                </MenuItem>
+                <MenuItem value={'/quiz'}>/quiz</MenuItem>
+                {/* <MenuItem value={20}></MenuItem> */}
+                {/* <MenuItem value={30}>Thirty</MenuItem> */}
+            </Select>
+            </FormControl>
+          </Grid>
+          <Grid item xs sm={10} md={2}>
             <LoadingButton
               fullWidth
               color="primary"
@@ -139,6 +175,8 @@ const ChatUI = () => {
           </Grid>
         </Grid>
       </Box>
+      <ModalWindow openModal={openModal} handleClose={handleClose} textTitle={errorMessage}
+      buttonElem={<Button onClick={handleClose} color="error" variant="contained">Close</Button>}/>
     </Box>
   );
 };

@@ -208,7 +208,7 @@ export default function SignupPage() {
             <Copyright sx={{ mt: 4, mb: 1 }} />
         </Box>
       {/* TODO - functionality to relocate user to home page and automatic login after signup successfully  */}
-        <ModalWindow textTitle="Ypu successfully sign up!" 
+        <ModalWindow textTitle="You successfully sign up!" 
         mainText="Let's begin studying!"
         openModal={openModal}
         handleClose={handleClose}

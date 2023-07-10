@@ -18,6 +18,8 @@ import inputValidator from '../utils/common/inputValidator';
 import Cookies from 'js-cookie';
 import authentication from '../api/post-data/authentication';
 import LoadingButton from '@mui/lab/LoadingButton';
+import ModalWindow from '../shared/common/ModalWindow';
+import { Button } from '@mui/material';
 // import login from '../utils/login/login';
 
 function Copyright(props: any) {
@@ -41,6 +43,10 @@ export default function LoginPage() {
   const [loading, setLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
   const navigate = useNavigate();
+
+  // for modal window
+  const [openModal, setOpenModal] = useState<boolean>(false);
+  const handleClose = () => setOpenModal(false)
 
   // const dispatch = useDispatch();
 
@@ -68,7 +74,12 @@ export default function LoginPage() {
               }
               setLoading(false)
             })
-            .catch((e) => console.log(e))
+            .catch((err) => {        
+              console.log(err)
+              setLoading(false);
+              setOpenModal(true)
+              setErrorMessage(err.message)
+            })
         } catch(e){
             console.log(e)
         }
@@ -133,7 +144,7 @@ export default function LoginPage() {
             >
               Sign In
             </LoadingButton>
-          <Typography sx={{marginBottom: '10px', textAlign: 'center'}} color="red" >{errorMessage}</Typography>
+          {/* <Typography sx={{marginBottom: '10px', textAlign: 'center'}} color="red" >{errorMessage}</Typography> */}
           </Box>
           <Grid container>
               <Grid item xs>
@@ -149,6 +160,8 @@ export default function LoginPage() {
             </Grid>
             <Copyright sx={{ mt: 4, mb: 1 }} />
         </Box>
+      <ModalWindow openModal={openModal} handleClose={handleClose} textTitle={errorMessage}
+        buttonElem={<Button onClick={handleClose} color="error" variant="contained">Close</Button>}/>
       </Container>
     )
 }
