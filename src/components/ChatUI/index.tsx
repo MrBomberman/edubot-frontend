@@ -65,7 +65,7 @@ const ChatUI = () => {
     }
   };
 
-  const handleSelectChange = (event:any) => {
+  const handleSelectChange = (event : SelectChangeEvent) => {
     setCommand(event.target.value)
     setInput(event.target.value)
   }
@@ -129,7 +129,7 @@ const ChatUI = () => {
       </Box>
       <Box sx={{ p: 2, backgroundColor: "background.default" }}>
         <Grid container spacing={0} sx={{alignItems: 'center'}}>
-          <Grid item xs={8}>
+          <Grid item xs={12} md={8}>
             <TextField
               size="small"
               fullWidth
@@ -141,8 +141,8 @@ const ChatUI = () => {
               onKeyUp={handleKeyUP}
             />
           </Grid>
-          <Grid item xs={2}>
-          <FormControl sx={{ m: 1, maxWidth: 90, width: '90px' }} size="small">
+          <Grid item sm={2} md={2}>
+          <FormControl sx={{ minWidth: 100 }} size="small">
           <InputLabel id="demo-select-small-label">Command</InputLabel>
             <Select
                 labelId="demo-select-small-label"
@@ -161,7 +161,7 @@ const ChatUI = () => {
             </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={2}>
+          <Grid item xs sm={10} md={2}>
             <LoadingButton
               fullWidth
               color="primary"
