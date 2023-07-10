@@ -34,10 +34,11 @@ type ModalProps = {
   mainText?: string,
   openModal: boolean,
   handleClose: () => void,
-  imageBook?: JSX.Element
+  imageBook?: JSX.Element,
+  errorMessage?: string
 }
 
-export default function ModalWindow({textTitle, buttonElem, mainText, openModal, handleClose, imageBook}: ModalProps) {
+export default function ModalWindow({textTitle, buttonElem, mainText, openModal, handleClose, imageBook, errorMessage}: ModalProps) {
   
   return (
     <div>
@@ -52,10 +53,10 @@ export default function ModalWindow({textTitle, buttonElem, mainText, openModal,
             imageBook :
             <>
               <Typography id="modal-modal-title" sx={{textAlign: 'center'}} variant="h6" component="h2">
-                {textTitle}
+                {Boolean(errorMessage) ? errorMessage : textTitle}
               </Typography>
               <Typography id="modal-modal-description" sx={{ mt: 2, textAlign: 'center', marginBottom: '15px' }}>
-              {mainText}
+              {Boolean(errorMessage) ? '' : mainText}
               </Typography>
               <Box sx={{display: 'flex', justifyContent: 'center'}}>
                 {buttonElem}
