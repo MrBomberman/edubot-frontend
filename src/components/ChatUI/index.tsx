@@ -28,7 +28,7 @@ const ChatUI = () => {
   const handleClose = () => setOpenModal(false)
   const [errorMessage, setErrorMessage] = useState<string>('');
 
-  const messages = JSON.parse(sessionStorage.getItem('messages') || `[{ "id": ${Math.random()*2}, "text": "Hello dear Student, welcome to your personalized tutoring program. Our team consists of world class tutors who will guide you to excel and be among the top 1% of students worldwide. Our main focus will be the Cambridge Academic program, preparing you for IGCSE exams.", "sender": "assistant" }]`);
+  const messages = JSON.parse(sessionStorage.getItem('messages') || `[{ "id": ${Math.random()*2}, "content": "Hello dear Student, welcome to your personalized tutoring program. Our team consists of world class tutors who will guide you to excel and be among the top 1% of students worldwide. Our main focus will be the Cambridge Academic program, preparing you for IGCSE exams.", "role": "assistant" }]`);
 
   const messageBlockRef = useRef({scrollTo, scrollHeight: 0});
 
@@ -37,15 +37,18 @@ const ChatUI = () => {
       if(loading == false) {
         try {
           setLoading(true)
-          messages.push({id: (Math.random()*3), text: input, sender: 'user'})
-          messages.push({id: (Math.random()*3), text: 'Loading...', sender: 'assistant'})
+          if(Boolean(messages[0].id)) {
+            messages.pop();
+          }
+          messages.push({content: input, role: 'user'})
+          // messages.push({id: (Math.random()*3), content: 'Loading...', role: 'assistant'})
           sessionStorage.setItem('messages', JSON.stringify(messages))
-          postMessage("https://bostonbackendengine-sc4x4pjhiq-uc.a.run.app/api/v1/boston/chatbot-reference", input)
+          postMessage("https://bostonbackendengine-sc4x4pjhiq-uc.a.run.app/api/v1/boston/chatbot-reference", messages)
             .then((res) => {
               messageBlockRef.current.scrollTo(0, messageBlockRef.current.scrollHeight)
               const textMessageObj = res.filter((item : any) => item.role == 'assistant');
-              const messageFromBot = {id: (Math.random()*2), text: textMessageObj[0].content, sender: textMessageObj[0].role};
-              messages.pop();
+              const messageFromBot = {content: textMessageObj[0].content, role: textMessageObj[0].role};
+              // messages.pop();
               messages.push(messageFromBot)
               sessionStorage.setItem('messages', JSON.stringify(messages))
               setLoading(false);
@@ -79,17 +82,20 @@ const ChatUI = () => {
       if(event.key == 'Enter' && loading == false){
         try {
           setLoading(true)
-          messages.push({id: (Math.random()*3), text: input, sender: 'user'})
-          messages.push({id: (Math.random()*3), text: 'Loading...', sender: 'assistant'})
+          if(Boolean(messages[0].id)) {
+            messages.pop();
+          }
+          messages.push({content: input, role: 'user'})
+          // messages.push({id: (Math.random()*3), content: 'Loading...', role: 'assistant'})
           sessionStorage.setItem('messages', JSON.stringify(messages))
           messageBlockRef?.current.scrollTo(0, messageBlockRef?.current.scrollHeight)
-          postMessage("https://bostonbackendengine-sc4x4pjhiq-uc.a.run.app/api/v1/boston/chatbot-reference", input)
+          postMessage("https://bostonbackendengine-sc4x4pjhiq-uc.a.run.app/api/v1/boston/chatbot-reference", messages)
             .then((res) => {
               messageBlockRef?.current.scrollTo(0, messageBlockRef?.current.scrollHeight)
               console.log('Data: ', res)
               const textMessageObj = res.filter((item : any) => item.role == 'assistant');
-              const messageFromBot = {id: (Math.random()*2), text: textMessageObj[0].content, sender: textMessageObj[0].role};
-              messages.pop();
+              const messageFromBot = {content: textMessageObj[0].content, role: textMessageObj[0].role};
+              // messages.pop();
               messages.push(messageFromBot)
               sessionStorage.setItem('messages', JSON.stringify(messages))
               setLoading(false);
@@ -124,7 +130,7 @@ const ChatUI = () => {
     >
       <Box ref={messageBlockRef} sx={{ flexGrow: 1, overflow: "auto", p: 2 }}>
         {messages.map((message: any) => (
-          <Message key={message.id} message={message} />
+          <Message key={(Math.random()*3)} message={message} />
         ))}
       </Box>
       <Box sx={{ p: 2, backgroundColor: "background.default" }}>
@@ -182,7 +188,7 @@ const ChatUI = () => {
 };
 
 const Message = ({ message } : any) => {
-  const isBot = message.sender === "assistant";
+  const isBot = message.role === "assistant";
 
   return (
     <Box
@@ -213,7 +219,7 @@ const Message = ({ message } : any) => {
             borderRadius: isBot ? "20px 20px 20px 5px" : "20px 20px 5px 20px",
           }}
         >
-          <Typography variant="body1">{message.text}</Typography>
+          <Typography variant="body1">{message.content}</Typography>
         </Paper>
       </Box>
     </Box>
