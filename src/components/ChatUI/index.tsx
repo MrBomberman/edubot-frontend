@@ -42,13 +42,12 @@ const ChatUI = () => {
           }
           messages.push({content: input, role: 'user'})
           // messages.push({id: (Math.random()*3), content: 'Loading...', role: 'assistant'})
-          sessionStorage.setItem('messages', JSON.stringify(messages))
+          sessionStorage.setItem('messages', JSON.stringify([...messages, {content: 'Loading...', role: 'assistant'}]))
           postMessage("https://bostonbackendengine-sc4x4pjhiq-uc.a.run.app/api/v1/boston/chatbot-reference", messages)
             .then((res) => {
               messageBlockRef.current.scrollTo(0, messageBlockRef.current.scrollHeight)
               const textMessageObj = res.filter((item : any) => item.role == 'assistant');
               const messageFromBot = {content: textMessageObj[0].content, role: textMessageObj[0].role};
-              // messages.pop();
               messages.push(messageFromBot)
               sessionStorage.setItem('messages', JSON.stringify(messages))
               setLoading(false);
@@ -87,7 +86,7 @@ const ChatUI = () => {
           }
           messages.push({content: input, role: 'user'})
           // messages.push({id: (Math.random()*3), content: 'Loading...', role: 'assistant'})
-          sessionStorage.setItem('messages', JSON.stringify(messages))
+          sessionStorage.setItem('messages', JSON.stringify([...messages, {content: 'Loading...', role: 'assistant'}]))
           messageBlockRef?.current.scrollTo(0, messageBlockRef?.current.scrollHeight)
           postMessage("https://bostonbackendengine-sc4x4pjhiq-uc.a.run.app/api/v1/boston/chatbot-reference", messages)
             .then((res) => {
@@ -95,7 +94,6 @@ const ChatUI = () => {
               console.log('Data: ', res)
               const textMessageObj = res.filter((item : any) => item.role == 'assistant');
               const messageFromBot = {content: textMessageObj[0].content, role: textMessageObj[0].role};
-              // messages.pop();
               messages.push(messageFromBot)
               sessionStorage.setItem('messages', JSON.stringify(messages))
               setLoading(false);
