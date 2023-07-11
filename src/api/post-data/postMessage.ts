@@ -19,18 +19,11 @@ export default async function postMessage(path : string, messages : any){
             });      
 
     if (response.status === 401){
-        Cookies.remove('access_token');
-        localStorage.clear();
-        const data = await response.json();
-        return data
-    } else {
-        if(response.status === 403){
-            await updateExpiredToken()
+        await updateExpiredToken()
 
-            await postMessage(path, messages)
-        } else {
-            const data = await response.json();
-            return data;
-        }
+        return await postMessage(path, messages)
+    } else {
+        const data = await response.json();
+        return await data;
     }
 }
