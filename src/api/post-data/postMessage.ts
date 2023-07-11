@@ -1,7 +1,7 @@
 import Cookies from 'js-cookie';
 import updateExpiredToken from './updateExpiredToken';
 
-export default async function postMessage(path : string, messages : any){
+export default async function postMessage(path : string, messages : any) : Promise<any> {
 
     const bearerToken = Cookies.get('access_token');
     
