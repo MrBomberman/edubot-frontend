@@ -37,21 +37,21 @@ const ChatUI = () => {
       if(loading == false) {
         try {
           setLoading(true)
-          if(Boolean(messages[0].id)) {
+          
+          if(messages.length != 0 && Boolean(messages[0].id)) {
             messages.pop();
           }
           messages.push({content: input, role: 'user'})
-          // messages.push({id: (Math.random()*3), content: 'Loading...', role: 'assistant'})
           sessionStorage.setItem('messages', JSON.stringify([...messages, {content: 'Loading...', role: 'assistant'}]))
           postMessage("https://bostonbackendengine-sc4x4pjhiq-uc.a.run.app/api/v1/boston/chatbot-reference", messages)
-            .then((res) => {
+            .then((res : any) => {
               messageBlockRef.current.scrollTo(0, messageBlockRef.current.scrollHeight)
               const textMessageObj = res.filter((item : any) => item.role == 'assistant');
               const messageFromBot = {content: textMessageObj[0].content, role: textMessageObj[0].role};
               messages.push(messageFromBot)
               sessionStorage.setItem('messages', JSON.stringify(messages))
               setLoading(false);
-            }).catch((err) => {
+            }).catch((err : any) => {
               messages.pop();
               sessionStorage.setItem('messages', JSON.stringify(messages))
               setLoading(false);
@@ -62,6 +62,11 @@ const ChatUI = () => {
           setInput("");
         } catch(e) {
           console.log(e)
+          setLoading(false);
+          setOpenModal(true);
+          setErrorMessage('Error !')
+          setCommand("")
+          setInput("");
         }
       }
     }
@@ -81,23 +86,22 @@ const ChatUI = () => {
       if(event.key == 'Enter' && loading == false){
         try {
           setLoading(true)
-          if(Boolean(messages[0].id)) {
+          if(messages.length != 0 && Boolean(messages[0].id)) {
             messages.pop();
           }
           messages.push({content: input, role: 'user'})
-          // messages.push({id: (Math.random()*3), content: 'Loading...', role: 'assistant'})
           sessionStorage.setItem('messages', JSON.stringify([...messages, {content: 'Loading...', role: 'assistant'}]))
           messageBlockRef?.current.scrollTo(0, messageBlockRef?.current.scrollHeight)
           postMessage("https://bostonbackendengine-sc4x4pjhiq-uc.a.run.app/api/v1/boston/chatbot-reference", messages)
-            .then((res) => {
+            .then((res : any) => {
               messageBlockRef?.current.scrollTo(0, messageBlockRef?.current.scrollHeight)
-              console.log('Data: ', res)
+              // console.log('Data: ', res)
               const textMessageObj = res.filter((item : any) => item.role == 'assistant');
               const messageFromBot = {content: textMessageObj[0].content, role: textMessageObj[0].role};
               messages.push(messageFromBot)
               sessionStorage.setItem('messages', JSON.stringify(messages))
               setLoading(false);
-            }).catch((err) => {
+            }).catch((err : any) => {
               messages.pop();
               sessionStorage.setItem('messages', JSON.stringify(messages))
               setLoading(false);
@@ -108,6 +112,11 @@ const ChatUI = () => {
           setInput("");
         } catch(e){
           console.log(e)
+          setLoading(false);
+          setOpenModal(true);
+          setErrorMessage('Error !')
+          setCommand("")
+          setInput("");
         }
       }
     }

@@ -1,5 +1,4 @@
 import Cookies from 'js-cookie';
-import updateExpiredToken from './updateExpiredToken';
 
 export default async function authentication(path : string, obj : any){
     
@@ -17,9 +16,6 @@ export default async function authentication(path : string, obj : any){
         const data = await response.json();
         return data
     } else {
-        if(response.status === 403){
-            await updateExpiredToken();
-        }
         const data = await response.json();
         return data;
     }
