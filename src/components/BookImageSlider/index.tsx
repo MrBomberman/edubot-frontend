@@ -12,7 +12,8 @@ import Divider from '@mui/material/Divider'
 // import ImageListItem from '@mui/material/ImageListItem';
 import { useSelector } from 'react-redux';
 import { RootStateOrAny } from 'react-redux';
-import Skeleton from '@mui/material/Skeleton';
+// import Skeleton from '@mui/material/Skeleton';
+import CircularProgress from '@mui/material/CircularProgress';
 
 // type imageObjProps = {
 //   label: string,
@@ -29,10 +30,9 @@ export default function BookImageSlider() {
   //   imgPath: ''
   // });
   
-
   // for store 
 
-  const imagesArray = useSelector((state: RootStateOrAny) => state.imageControllerReducer.imagesArray)
+  const imagesArray = useSelector((state: RootStateOrAny) => state.imageControllerReducer.imagesArray);
 
   const loading = useSelector((state: RootStateOrAny) => state.imageControllerReducer.loading);
 
@@ -62,10 +62,14 @@ export default function BookImageSlider() {
         <Typography sx={{margin: '15px', color: 'rgba(0, 0, 0, 1)', fontWeight: 'bold'}}>
                     Here is the book 
             from your syllabus:
-        </Typography>
+        </Typography> 
         <Divider variant="middle" />
 
-        {loading ? <Skeleton height={500}/> : 
+        {loading ? 
+        <Box sx={{ display: 'flex', width: '100%', height: '150px', justifyContent: 'center',
+              alignItems: 'center' }}>
+          <CircularProgress />
+        </Box> : 
 
         imagesArray.length === 0 ? "There isn't any page from book for your last message" :
         <>
