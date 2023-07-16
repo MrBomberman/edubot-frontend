@@ -54,10 +54,8 @@ export default function BookImageSlider() {
 
 
   useEffect(() => {
-    console.log(imagesArray)
-  }, [])
-
-  // console.log('loading', loading)
+    setActiveStep(0)
+  }, [imagesArray])
 
   return (
     <Box sx={{ flexGrow: 1 }}>
