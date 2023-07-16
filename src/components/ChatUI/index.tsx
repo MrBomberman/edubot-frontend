@@ -151,7 +151,7 @@ const ChatUI = () => {
                 if(Boolean(infoAboutBookPages)) {
                   for(let i = 0; i < infoAboutBookPages.length; i++){
                     pages.push({label : infoAboutBookPages[i].page, 
-                      imgPath: `${infoAboutBookPages[i].uri}?auto=format&fit=crop&w=500&h=350`});
+                      imgPath: `${infoAboutBookPages[i].uri}?auto=format&fit=crop&w=400&h=350`});
                   }
                 }
               }

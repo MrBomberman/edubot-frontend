@@ -67,7 +67,7 @@ export default function BookImageSlider() {
         </Typography>
         <Divider variant="middle" />
 
-        {loading ? <Skeleton height={600}/> : 
+        {loading ? <Skeleton height={500}/> : 
 
         imagesArray.length === 0 ? "There isn't any page from book for your last message" :
         <>
