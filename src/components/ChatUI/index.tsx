@@ -99,6 +99,10 @@ const ChatUI = () => {
               });
             }).then(() => {
               dispatch({type: UPDATE_SLIDER_IMAGES, payload: pages})
+              // TODO ---------------------
+              // if(pages.length > 0) {
+              //   sessionStorage.setItem('pages', JSON.stringify(pages))
+              // }
               dispatch({type: UPDATE_BOOK_IMAGE_LOADING, payload: false})
             }).catch((err : any) => {
               messages.pop();
@@ -166,6 +170,10 @@ const ChatUI = () => {
               });
             }).then(() => {
               dispatch({type: UPDATE_SLIDER_IMAGES, payload: pages})
+              // TODO ---------------------
+              // if(pages.length > 0) {
+              //   sessionStorage.setItem('pages', JSON.stringify(pages))
+              // }
               dispatch({type: UPDATE_BOOK_IMAGE_LOADING, payload: false})
             }).catch((err : any) => {
               messages.pop();
