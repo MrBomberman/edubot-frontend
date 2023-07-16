@@ -19,13 +19,13 @@ const imageStyle = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  minWidth: 300,
-  maxWidth: 600,
-  minHeight: 200,
+  maxWidth: 750,
+  height: 'auto',
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
   p: 4,
+  overflowY : 'auto'
 }
 
 type ModalProps = {
@@ -47,6 +47,7 @@ export default function ModalWindow({textTitle, buttonElem, mainText, openModal,
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
+        // sx={Boolean(imageBook) ? {width: '800px'} : {}}
       >
         <Box sx={Boolean(imageBook) ? imageStyle : style}>
           {Boolean(imageBook) ? 

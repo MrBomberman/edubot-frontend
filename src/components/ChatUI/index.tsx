@@ -17,11 +17,43 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import ModalWindow from "../../shared/common/ModalWindow";
+import { useDispatch } from "react-redux";
+import { UPDATE_BOOK_IMAGE_LOADING, UPDATE_SLIDER_IMAGES } from "../../store/imageControllerStore/imageControllerReducer";
+
+
+// const steps = [
+//   {
+//       label: 'San Francisco – Oakland Bay Bridge, United States',
+//       imgPath:
+//         'https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250',
+//     },
+//     {
+//       label: 'Bird',
+//       imgPath:
+//         'https://images.unsplash.com/photo-1538032746644-0212e812a9e7?auto=format&fit=crop&w=400&h=250',
+//     },
+//     {
+//       label: 'Bali, Indonesia',
+//       imgPath:
+//         'https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=400&h=250',
+//     },
+//     {
+//       label: 'Goč, Serbia',
+//       imgPath:
+//         'https://images.unsplash.com/photo-1512341689857-198e7e2f3ca8?auto=format&fit=crop&w=400&h=250',
+//     },
+// ];
 
 const ChatUI = () => {
   const [input, setInput] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [command, setCommand] = useState<string>('');
+
+  // const [pages, setPages] = useState<Array<any>>([]);
+
+  // for store 
+
+  const dispatch = useDispatch();
 
   // for modal window
   const [openModal, setOpenModal] = useState(false);
@@ -33,6 +65,7 @@ const ChatUI = () => {
   const messageBlockRef = useRef({scrollTo, scrollHeight: 0});
 
   const handleSend = () => {
+    const pages: any[] = [];
     if (input.trim() !== "") {
       if(loading == false) {
         try {
@@ -45,12 +78,28 @@ const ChatUI = () => {
           sessionStorage.setItem('messages', JSON.stringify([...messages, {content: 'Loading...', role: 'assistant'}]))
           postMessage("https://bostonbackendengine-sc4x4pjhiq-uc.a.run.app/api/v1/boston/chatbot-reference", messages)
             .then((res : any) => {
-              messageBlockRef.current.scrollTo(0, messageBlockRef.current.scrollHeight)
+              messageBlockRef.current.scrollTo(0, messageBlockRef.current.scrollHeight);
+              if(res.length > 1) {
+                const infoAboutBookPages : any = res.filter((item : any) => item.role == 'function')[0].content[0].docs;
+                if(Boolean(infoAboutBookPages)) {
+                  for(let i = 0; i < infoAboutBookPages.length; i++){
+                    pages.push({label : infoAboutBookPages[i].page, 
+                      imgPath: `${infoAboutBookPages[i].uri}?auto=format&fit=crop`});
+                  }
+                }
+              }
               const textMessageObj = res.filter((item : any) => item.role == 'assistant');
               const messageFromBot = {content: textMessageObj[0].content, role: textMessageObj[0].role};
               messages.push(messageFromBot)
               sessionStorage.setItem('messages', JSON.stringify(messages))
               setLoading(false);
+              dispatch({type: UPDATE_BOOK_IMAGE_LOADING, payload: true})
+              return new Promise((resolve) => {
+                setTimeout(() => resolve('foo'), 500);
+              });
+            }).then(() => {
+              dispatch({type: UPDATE_SLIDER_IMAGES, payload: pages})
+              dispatch({type: UPDATE_BOOK_IMAGE_LOADING, payload: false})
             }).catch((err : any) => {
               messages.pop();
               sessionStorage.setItem('messages', JSON.stringify(messages))
@@ -82,6 +131,7 @@ const ChatUI = () => {
   };
 
   const handleKeyUP = (event: any) => {
+    const pages: any[] = [];
     if (input.trim() !== "") {
       if(event.key == 'Enter' && loading == false){
         try {
@@ -95,12 +145,28 @@ const ChatUI = () => {
           postMessage("https://bostonbackendengine-sc4x4pjhiq-uc.a.run.app/api/v1/boston/chatbot-reference", messages)
             .then((res : any) => {
               messageBlockRef?.current.scrollTo(0, messageBlockRef?.current.scrollHeight)
-              // console.log('Data: ', res)
+              console.log('Data: ', res)
+              if(res.length > 1) {
+                const infoAboutBookPages = res.filter((item : any) => item.role == 'function')[0].content[0].docs;
+                if(Boolean(infoAboutBookPages)) {
+                  for(let i = 0; i < infoAboutBookPages.length; i++){
+                    pages.push({label : infoAboutBookPages[i].page, 
+                      imgPath: `${infoAboutBookPages[i].uri}?auto=format&fit=crop&w=500&h=350`});
+                  }
+                }
+              }
               const textMessageObj = res.filter((item : any) => item.role == 'assistant');
               const messageFromBot = {content: textMessageObj[0].content, role: textMessageObj[0].role};
               messages.push(messageFromBot)
               sessionStorage.setItem('messages', JSON.stringify(messages))
               setLoading(false);
+              dispatch({type: UPDATE_BOOK_IMAGE_LOADING, payload: true})
+              return new Promise((resolve) => {
+                setTimeout(() => resolve('foo'), 500);
+              });
+            }).then(() => {
+              dispatch({type: UPDATE_SLIDER_IMAGES, payload: pages})
+              dispatch({type: UPDATE_BOOK_IMAGE_LOADING, payload: false})
             }).catch((err : any) => {
               messages.pop();
               sessionStorage.setItem('messages', JSON.stringify(messages))
