@@ -145,12 +145,12 @@ export default function LoginPage() {
             </LoadingButton>
           {/* <Typography sx={{marginBottom: '10px', textAlign: 'center'}} color="red" >{errorMessage}</Typography> */}
           </Box>
-          <Grid container>
-              <Grid item xs>
+          <Grid container sx={{justifyContent: 'center'}}>
+              {/* <Grid item xs>
                 <Link to="#">
                   Forgot password?
                 </Link>
-              </Grid>
+              </Grid> */}
               <Grid item>
                 <Link to={routerUrls.authRegistration}>
                   {"Don't have an account? Sign Up"}
