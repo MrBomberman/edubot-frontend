@@ -238,8 +238,6 @@ const ChatUI = () => {
   );
 };
 
-//1px solid var(--gray-200)
-
 const Message = ({ message } : any) => {
 
   return (
@@ -271,7 +269,7 @@ const Message = ({ message } : any) => {
           }}
         > 
           <Typography sx={{minWidth: '85px', width: '85px', fontWeight: 'bold', wordWrap: 'break-word'}} 
-          variant="body1">{message.role === "assistant" ? 'Boston' : Cookies.get('username')}</Typography>
+          variant="body1">{message.role === "assistant" ? 'Boston' : Boolean(Cookies.get('username')) ? Cookies.get('username') : 'You' }</Typography>
           <Typography sx={{marginLeft: '20px'}} variant="body1">{message.content}</Typography>
         </Paper>
       </Box>
