@@ -270,7 +270,8 @@ const Message = ({ message } : any) => {
             borderBottom: '1px solid var(--gray-200)'
           }}
         > 
-          <Typography sx={{minWidth: '85px', fontWeight: 'bold'}} variant="body1">{message.role === "assistant" ? 'Boston' : Cookies.get('username')}</Typography>
+          <Typography sx={{minWidth: '85px', width: '85px', fontWeight: 'bold', wordWrap: 'break-word'}} 
+          variant="body1">{message.role === "assistant" ? 'Boston' : Cookies.get('username')}</Typography>
           <Typography sx={{marginLeft: '20px'}} variant="body1">{message.content}</Typography>
         </Paper>
       </Box>
