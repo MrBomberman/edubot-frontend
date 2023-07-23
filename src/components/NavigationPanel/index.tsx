@@ -80,7 +80,7 @@ export default function NavigationPanel({children} : any) {
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open}>
+      <AppBar position="fixed" open={open} sx={{  backgroundColor: '#EEEE', color: 'rgba(0, 0, 0, 1)' }}>
         <Toolbar>
           <IconButton
             color="inherit"
@@ -97,7 +97,7 @@ export default function NavigationPanel({children} : any) {
             </Typography>
 
             <Typography sx={{display: 'flex'}} noWrap component="div">
-                <NotificationBlock badgeContent={10}/>
+                <NotificationBlock badgeContent={0}/>
                 <AccountButton/>
             </Typography>
           </Toolbar>

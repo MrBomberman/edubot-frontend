@@ -3,7 +3,6 @@ import {
   Box,
   TextField,
   Typography,
-  Avatar,
   Grid,
   Paper,
   Button,
@@ -11,7 +10,7 @@ import {
 import SendIcon from "@mui/icons-material/Send";
 import postMessage from "../../api/post-data/postMessage";
 import { LoadingButton } from "@mui/lab";
-import robot from '../../images/robot.png';
+// import robot from '../../images/robot.png';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -180,7 +179,7 @@ const ChatUI = () => {
         bgcolor: "grey.200",
       }}
     >
-      <Box ref={messageBlockRef} sx={{ flexGrow: 1, overflow: "auto", p: 2 }}>
+      <Box ref={messageBlockRef} sx={{ flexGrow: 1, overflow: "auto" }}>
         {messages.map((message: any) => (
           <Message key={(Math.random()*3)} message={message} />
         ))}
@@ -239,39 +238,40 @@ const ChatUI = () => {
   );
 };
 
+//1px solid var(--gray-200)
+
 const Message = ({ message } : any) => {
-  const isBot = message.role === "assistant";
 
   return (
     <Box
       sx={{
         display: "flex",
-        justifyContent: isBot ? "flex-start" : "flex-end",
-        mb: 2,
+        justifyContent: "flex-start",
+        width: '100%'
       }}
     >
       <Box
         sx={{
           display: "flex",
-          flexDirection: isBot ? "row" : "row-reverse",
-          alignItems: "center",
+          flexDirection: "row" ,
+          width: '100%'
+          // alignItems: "center",
         }}
       >
-        <Avatar sx={{ bgcolor: isBot ? "primary.main" : "secondary.main"}}
-          src={isBot ? robot : ""}>
-          {isBot ? "B" : "U"}
-        </Avatar>
         <Paper
           variant="outlined"
           sx={{
             p: 2,
-            ml: isBot ? 1 : 0,
-            mr: isBot ? 0 : 1,
-            backgroundColor: isBot ? "primary.light" : "#FFF",
-            borderRadius: isBot ? "20px 20px 20px 5px" : "20px 20px 5px 20px",
+            backgroundColor: "#FFF",
+            width: '100%',
+            textAlign: 'initial',
+            display: 'flex',
+            borderRadius : 0,
+            borderBottom: '1px solid var(--gray-200)'
           }}
-        >
-          <Typography variant="body1">{message.content}</Typography>
+        > 
+          <Typography sx={{minWidth: '85px', fontWeight: 'bold'}} variant="body1">{message.role === "assistant" ? 'Boston' : Cookies.get('username')}</Typography>
+          <Typography sx={{marginLeft: '20px'}} variant="body1">{message.content}</Typography>
         </Paper>
       </Box>
     </Box>
