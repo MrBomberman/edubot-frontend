@@ -3,7 +3,6 @@ import {
   Box,
   TextField,
   Typography,
-  Avatar,
   Grid,
   Paper,
   Button,
@@ -11,7 +10,7 @@ import {
 import SendIcon from "@mui/icons-material/Send";
 import postMessage from "../../api/post-data/postMessage";
 import { LoadingButton } from "@mui/lab";
-import robot from '../../images/robot.png';
+// import robot from '../../images/robot.png';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -242,7 +241,6 @@ const ChatUI = () => {
 //1px solid var(--gray-200)
 
 const Message = ({ message } : any) => {
-  const isBot = message.role === "assistant";
 
   return (
     <Box

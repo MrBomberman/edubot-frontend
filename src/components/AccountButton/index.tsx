@@ -55,7 +55,7 @@ export default function AccountButton() {
                         aria-expanded={open ? "true" : undefined}
                     >
                         <Avatar alt="U" sx={{ width: 32, height: 32,
-                            backgroundColor:stringToColor(Cookies.get('username'))}}>
+                            backgroundColor:stringToColor(Cookies.get('username') || 'U')}}>
                             {Cookies.get('username')?.slice(0,1)}</Avatar>
                     </IconButton>
                 </Tooltip>
