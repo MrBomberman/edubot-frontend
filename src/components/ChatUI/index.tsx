@@ -19,30 +19,7 @@ import InputLabel from '@mui/material/InputLabel';
 import ModalWindow from "../../shared/common/ModalWindow";
 import { useDispatch } from "react-redux";
 import { UPDATE_BOOK_IMAGE_LOADING, UPDATE_SLIDER_IMAGES } from "../../store/imageControllerStore/imageControllerReducer";
-
-
-// const steps = [
-//   {
-//       label: 'San Francisco – Oakland Bay Bridge, United States',
-//       imgPath:
-//         'https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250',
-//     },
-//     {
-//       label: 'Bird',
-//       imgPath:
-//         'https://images.unsplash.com/photo-1538032746644-0212e812a9e7?auto=format&fit=crop&w=400&h=250',
-//     },
-//     {
-//       label: 'Bali, Indonesia',
-//       imgPath:
-//         'https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=400&h=250',
-//     },
-//     {
-//       label: 'Goč, Serbia',
-//       imgPath:
-//         'https://images.unsplash.com/photo-1512341689857-198e7e2f3ca8?auto=format&fit=crop&w=400&h=250',
-//     },
-// ];
+import Cookies from "js-cookie";
 
 const ChatUI = () => {
   const [input, setInput] = useState<string>("");
@@ -60,7 +37,8 @@ const ChatUI = () => {
   const handleClose = () => setOpenModal(false)
   const [errorMessage, setErrorMessage] = useState<string>('');
 
-  const messages = JSON.parse(sessionStorage.getItem('messages') || `[{ "id": ${Math.random()*2}, "content": "Hello dear Student, welcome to your personalized tutoring program. Our team consists of world class tutors who will guide you to excel and be among the top 1% of students worldwide. Our main focus will be the Cambridge Academic program, preparing you for IGCSE exams.", "role": "assistant" }]`);
+  const messages = JSON.parse(sessionStorage.getItem('messages') ||
+   `[{ "content": "Hello dear ${Cookies.get('username')}, welcome to your personalized tutoring program. I am Boston the Edubot, I will guide you to excel and be among the top 1% of students worldwide. My main focus is the Cambridge Academic math program, preparing you for IGCSE exams. Together we will be crafting examples around your interests for effective learning. Before we dig deep into exploring the world of mathematics, I'd like to conduct a quick quiz. This will help me understand your current level of mastery in Math and tailor my tutoring to your needs. Are you ready to start the quiz?", "role": "assistant" }]`);
 
   const messageBlockRef = useRef({scrollTo, scrollHeight: 0});
 
@@ -70,21 +48,17 @@ const ChatUI = () => {
       if(loading == false) {
         try {
           setLoading(true)
-          
-          if(messages.length != 0 && Boolean(messages[0].id)) {
-            messages.pop();
-          }
           messages.push({content: input, role: 'user'})
           sessionStorage.setItem('messages', JSON.stringify([...messages, {content: 'Loading...', role: 'assistant'}]))
           postMessage("https://bostonbackendengine-sc4x4pjhiq-uc.a.run.app/api/v1/boston/chatbot-reference", messages)
             .then((res : any) => {
               messageBlockRef.current.scrollTo(0, messageBlockRef.current.scrollHeight);
               if(res.length > 1) {
-                const infoAboutBookPages : any = res.filter((item : any) => item.role == 'function')[0].content[0].docs;
+                const infoAboutBookPages : any = res.filter((item : any) => item.role == undefined || item.role === 'function');
                 if(Boolean(infoAboutBookPages)) {
                   for(let i = 0; i < infoAboutBookPages.length; i++){
-                    pages.push({label : infoAboutBookPages[i].page, 
-                      imgPath: `${infoAboutBookPages[i].uri}?auto=format&fit=crop`});
+                    pages.push({label : infoAboutBookPages[0].content[0].docs[i].page, 
+                      imgPath: `${infoAboutBookPages[1][i]}?auto=format&fit=crop&w=400&h=350`});
                   }
                 }
               }
@@ -140,9 +114,6 @@ const ChatUI = () => {
       if(event.key == 'Enter' && loading == false){
         try {
           setLoading(true)
-          if(messages.length != 0 && Boolean(messages[0].id)) {
-            messages.pop();
-          }
           messages.push({content: input, role: 'user'})
           sessionStorage.setItem('messages', JSON.stringify([...messages, {content: 'Loading...', role: 'assistant'}]))
           messageBlockRef?.current.scrollTo(0, messageBlockRef?.current.scrollHeight)
@@ -151,11 +122,11 @@ const ChatUI = () => {
               messageBlockRef?.current.scrollTo(0, messageBlockRef?.current.scrollHeight)
               console.log('Data: ', res)
               if(res.length > 1) {
-                const infoAboutBookPages = res.filter((item : any) => item.role == 'function')[0].content[0].docs;
+                const infoAboutBookPages = res.filter((item : any) => item.role == undefined || item.role === 'function');
                 if(Boolean(infoAboutBookPages)) {
                   for(let i = 0; i < infoAboutBookPages.length; i++){
-                    pages.push({label : infoAboutBookPages[i].page, 
-                      imgPath: `${infoAboutBookPages[i].uri}?auto=format&fit=crop&w=400&h=350`});
+                    pages.push({label : infoAboutBookPages[0].content[0].docs[i].page, 
+                      imgPath: `${infoAboutBookPages[1][i]}?auto=format&fit=crop&w=400&h=350`});
                   }
                 }
               }

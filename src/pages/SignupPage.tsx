@@ -101,6 +101,7 @@ export default function SignupPage() {
                 setErrorMessage(res.msg)
               } else {
                 setErrorMessage('');
+                Cookies.set('username', login);
                 Cookies.set('access_token', res.msg.access_token);
                 Cookies.set('refresh_token', res.msg.refresh_token);
                 navigate('/home')
