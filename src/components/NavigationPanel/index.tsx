@@ -82,7 +82,7 @@ export default function NavigationPanel({children} : any) {
       <CssBaseline />
       <AppBar position="fixed" open={open} sx={{  backgroundColor: '#EEEE', color: 'rgba(0, 0, 0, 1)' }}>
         <Toolbar>
-          <IconButton
+          {/* <IconButton
             color="inherit"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
@@ -90,14 +90,14 @@ export default function NavigationPanel({children} : any) {
             sx={{ mr: 2, ...(open && { display: 'none' }) }}
           >
             <MenuIcon />
-          </IconButton>
+          </IconButton> */}
           <Toolbar sx={{display: 'flex', justifyContent: 'space-between', width: '100%'}}>
             <Typography variant="h6" noWrap component="div">
               Boston the Edubot
             </Typography>
 
             <Typography sx={{display: 'flex'}} noWrap component="div">
-                <NotificationBlock badgeContent={0}/>
+                {/* <NotificationBlock badgeContent={0}/> */}
                 <AccountButton/>
             </Typography>
           </Toolbar>
@@ -116,11 +116,11 @@ export default function NavigationPanel({children} : any) {
         anchor="left"
         open={open}
       >
-        <DrawerHeader>
+        {/* <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
-        </DrawerHeader>
+        </DrawerHeader> */}
         <Divider />
         {/* <List>
           {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
