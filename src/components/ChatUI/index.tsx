@@ -119,7 +119,7 @@ const ChatUI = () => {
           postMessage("https://bostonbackendengine-sc4x4pjhiq-uc.a.run.app/api/v1/boston/chatbot-reference", messages)
             .then((res : any) => {
               messageBlockRef?.current.scrollTo(0, messageBlockRef?.current.scrollHeight)
-              console.log('Data: ', res)
+              // console.log('Data: ', res)
               if(res.length > 1) {
                 const infoAboutBookPages = res.filter((item : any) => item.role == undefined || item.role === 'function');
                 if(Boolean(infoAboutBookPages)) {
