@@ -17,14 +17,14 @@ export default function StudyEdubotHome() {
   return (
     <Box sx={{ blockSize: 'auto', marginTop: '1em'}}>
       <Grid container spacing={2}>
-        <Grid item xs={12} md={8}>
+      <Grid item xs={12} md={8}>
           <Item sx={{minHeight: '85vh', maxHeight: '85vh',  borderRadius: '10px', overflow: 'auto'}}>
-            <ChatUI/>
+            <BookImageSlider/>
           </Item>
         </Grid>
         <Grid item xs>
           <Item sx={{minHeight: '85vh', maxHeight: '85vh',  borderRadius: '10px', overflow: 'auto'}}>
-            <BookImageSlider/>
+            <ChatUI/>
           </Item>
         </Grid>
       </Grid>

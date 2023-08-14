@@ -19,6 +19,7 @@ import ModalWindow from "../../shared/common/ModalWindow";
 import { useDispatch } from "react-redux";
 import { UPDATE_BOOK_IMAGE_LOADING, UPDATE_SLIDER_IMAGES } from "../../store/imageControllerStore/imageControllerReducer";
 import Cookies from "js-cookie";
+import SwipeableSendTextBlock from '../SwipeableSendTextBlock';
 
 const ChatUI = () => {
   const [input, setInput] = useState<string>("");
@@ -28,6 +29,22 @@ const ChatUI = () => {
   // const [pages, setPages] = useState<Array<any>>([]);
 
   // for store 
+
+  const [state, setState] = useState({
+    bottom: false
+  });
+
+  const toggleDrawer = (anchor, open) => (event) => {
+    if (
+      event &&
+      event.type === 'keydown' &&
+      (event.key === 'Tab' || event.key === 'Shift')
+    ) {
+      return;
+    }
+
+    setState({ ...state, [anchor]: open });
+  };
 
   const dispatch = useDispatch();
 
@@ -186,7 +203,7 @@ const ChatUI = () => {
       </Box>
       <Box sx={{ p: 2, backgroundColor: "background.default" }}>
         <Grid container spacing={0} sx={{alignItems: 'center'}}>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={12} md>
             <TextField
               size="small"
               fullWidth
@@ -196,9 +213,10 @@ const ChatUI = () => {
               value={input}
               onChange={handleInputChange}
               onKeyUp={handleKeyUP}
+              onClick={toggleDrawer('bottom', true)}
             />
           </Grid>
-          <Grid item sm={2} md={2}>
+          <Grid item sm={2} md>
           <FormControl sx={{ minWidth: 100 }} size="small">
           <InputLabel id="demo-select-small-label">Command</InputLabel>
             <Select
@@ -218,7 +236,7 @@ const ChatUI = () => {
             </Select>
             </FormControl>
           </Grid>
-          <Grid item xs sm={10} md={2}>
+          <Grid item xs sm={10} md>
             <LoadingButton
               fullWidth
               color="primary"
@@ -230,6 +248,7 @@ const ChatUI = () => {
               Send
             </LoadingButton>
           </Grid>
+          <SwipeableSendTextBlock toggleDrawer={toggleDrawer} state={state}/>
         </Grid>
       </Box>
       <ModalWindow openModal={openModal} handleClose={handleClose} textTitle={errorMessage}
