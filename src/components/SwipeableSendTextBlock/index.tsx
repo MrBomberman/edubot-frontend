@@ -12,8 +12,72 @@ import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import { Grid, InputLabel, FormControl, Select, MenuItem, TextField } from '@mui/material';
 import { LoadingButton } from "@mui/lab";
+import SendIcon from "@mui/icons-material/Send";
+import { TextareaAutosize } from '@mui/base/TextareaAutosize';
+import { styled } from '@mui/system';
 
-export default function SwipeableSendTextBlock({toggleDrawer, state}) {
+
+
+
+
+export default function SwipeableSendTextBlock({toggleDrawer, state, loading, input, handleKeyUP, handleInputChange,
+    handleSend, handleSelectChange, command} : any) {
+
+
+    const blue = {
+        100: '#DAECFF',
+        200: '#b6daff',
+        400: '#3399FF',
+        500: '#007FFF',
+        600: '#0072E5',
+        900: '#003A75',
+        };
+    
+    const grey = {
+    50: '#f6f8fa',
+    100: '#eaeef2',
+    200: '#d0d7de',
+    300: '#afb8c1',
+    400: '#8c959f',
+    500: '#6e7781',
+    600: '#57606a',
+    700: '#424a53',
+    800: '#32383f',
+    900: '#24292f',
+    };
+
+    const StyledTextarea = styled(TextareaAutosize)(
+        ({ theme }) => `
+        width: 80vw;
+        height: 6vh;
+        font-family: Inter, sans-serif;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        padding: 12px;
+        resize: none;
+        border-radius: 12px 12px 0 12px;
+        color: ${theme.palette.mode === 'dark' ? grey[300] : grey[900]};
+        background: ${theme.palette.mode === 'dark' ? grey[900] : '#fff'};
+        border: 1px solid ${theme.palette.mode === 'dark' ? grey[700] : grey[200]};
+        box-shadow: 0px 2px 2px ${theme.palette.mode === 'dark' ? grey[900] : grey[50]};
+        
+        &:hover {
+            border-color: ${blue[400]};
+        }
+        
+        &:focus {
+            border-color: ${blue[400]};
+            box-shadow: 0 0 0 3px ${theme.palette.mode === 'dark' ? blue[500] : blue[200]};
+        }
+        
+        // firefox
+        &:focus-visible {
+            outline: 0;
+        }
+        `,
+        );
+        
 //   const [state, setState] = React.useState({
 //     bottom: false
 //   });
@@ -37,17 +101,16 @@ export default function SwipeableSendTextBlock({toggleDrawer, state}) {
     //   onClick={toggleDrawer(anchor, false)}
     //   onKeyDown={toggleDrawer(anchor, false)}
     >
-       <Grid container spacing={0} sx={{alignItems: 'center', minHeight: '100px'}}>
+       <Grid container spacing={2} sx={{alignItems: 'center', minHeight: '15vh', padding: '15px'}}>
         <Grid item sm={9} xs={12} md={10}>
-            <TextField
-              size="small"
-              fullWidth
+            <StyledTextarea
+              minRows={2}
+              maxRows={2}
               autoFocus
-              placeholder="Type a message"
-              variant="outlined"
+              placeholder="Type a message..."
             //   value={input}
-            //   onChange={handleInputChange}
-            //   onKeyUp={handleKeyUP}
+              onChange={(e) => console.log(e.target.value)}
+              onKeyUp={handleKeyUP}
             />
           </Grid>
           <Grid item sm={2} xs={2} md={1}>
@@ -56,17 +119,15 @@ export default function SwipeableSendTextBlock({toggleDrawer, state}) {
             <Select
                 labelId="demo-select-small-label"
                 id="demo-select-small"
-                // value={command}
+                value={command}
                 label="Command"
-                // sx=s
-                // onChange={handleSelectChange}
+                sx={{height: '5vh'}}
+                onChange={handleSelectChange}
               >
                 <MenuItem value="">
                   <em>Command</em>
                 </MenuItem>
                 <MenuItem value={'/quiz'}>/quiz</MenuItem>
-                {/* <MenuItem value={20}></MenuItem> */}
-                {/* <MenuItem value={30}>Thirty</MenuItem> */}
             </Select>
             </FormControl>  
           </Grid>
@@ -75,9 +136,10 @@ export default function SwipeableSendTextBlock({toggleDrawer, state}) {
               fullWidth
               color="primary"
               variant="contained"
-            //   loading={loading}
-            //   endIcon={<SendIcon />}
-            //   onClick={handleSend}
+              sx={{height: '5vh'}}
+              loading={loading}
+              endIcon={<SendIcon />}
+              onClick={handleSend}
             >
               Send
             </LoadingButton>

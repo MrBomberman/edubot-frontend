@@ -120,9 +120,14 @@ const ChatUI = () => {
     setInput(event.target.value)
   }
 
-  const handleInputChange = (event: any) => {
-    setInput(event.target.value);
+  const handleInputChange = (value: any) => {
+    console.log(value)
+    setInput(value);
   };
+
+  // const handleTextAreaChange = (value: any) => {
+  //   setInput(value)
+  // }
 
   const handleKeyUP = (event: any) => {
     const pages: any[] = [];
@@ -211,7 +216,7 @@ const ChatUI = () => {
               placeholder="Type a message"
               variant="outlined"
               value={input}
-              onChange={handleInputChange}
+              onChange={(e) => handleInputChange(e.target.value)}
               onKeyUp={handleKeyUP}
               onClick={toggleDrawer('bottom', true)}
             />
@@ -248,7 +253,10 @@ const ChatUI = () => {
               Send
             </LoadingButton>
           </Grid>
-          <SwipeableSendTextBlock toggleDrawer={toggleDrawer} state={state}/>
+          <SwipeableSendTextBlock loading={loading}
+          handleInputChange={handleInputChange} handleKeyUP={handleKeyUP} input={input}
+           toggleDrawer={toggleDrawer} handleSend={handleSend} state={state}
+           handleSelectChange={(value: any) => handleSelectChange(value)}  command={command}/>
         </Grid>
       </Box>
       <ModalWindow openModal={openModal} handleClose={handleClose} textTitle={errorMessage}
