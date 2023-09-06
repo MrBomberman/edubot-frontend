@@ -8,12 +8,13 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import LoginPage from "./pages/LoginPage";
 import routerUrls from "./constants/routerUrls";
 import SignupPage from "./pages/SignupPage";
-import StudyEdubotHome from "./pages/StudyEdubotHome.tsx";
+import StudyEdubotChat from "./pages/StudyEdubotChat.tsx";
 // import PageWithListOfAnyStatusKVGroup from "./pages/PageWithListOfAnyStatusKVGroup";
 // import NotFound from "./pages/NotFound";
 import {store} from './store/store.ts'
 import PrivateRoute from "./components/PrivateRoute/index.tsx";
 import PageNotFound from "./pages/PageNotFound.tsx";
+import PresentationPage from "./pages/PresentationPage.tsx";
 
 
 function App() : JSX.Element {
@@ -22,9 +23,9 @@ function App() : JSX.Element {
       <Router>
         <Routes>
 
-          <Route path="/" element={<Navigate to="/home" />}/>
+          <Route path="/" element={<PresentationPage/>}/>
 
-          <Route path={routerUrls.home} element={<PrivateRoute><StudyEdubotHome/></PrivateRoute>}/>
+          <Route path={routerUrls.chat} element={<PrivateRoute><StudyEdubotChat/></PrivateRoute>}/>
 
           <Route path={routerUrls.authLogin} element={<LoginPage/>} />
 
