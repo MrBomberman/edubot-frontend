@@ -11,5 +11,5 @@ export default function PrivateRoute({children} : any){
                 {children}
     </NavigationPanel>
 
-    : <Navigate to='/login'/>
+    : <Navigate to='/'/>
 }
