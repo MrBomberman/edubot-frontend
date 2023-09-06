@@ -26,7 +26,7 @@ function Copyright(props: any) {
     return (
       <Typography variant="body2" color="text.secondary" align="center" {...props}>
         {'Copyright © '}
-        <Link color="inherit" to="https://mui.com/">
+        <Link color="inherit" to="/">
             EduBot
         </Link>{' '}
         {new Date().getFullYear()}
@@ -72,7 +72,7 @@ export default function LoginPage() {
                 Cookies.set('username', login);
                 Cookies.set('access_token', res.msg.access_token);
                 Cookies.set('refresh_token', res.msg.refresh_token);
-                navigate('/home')
+                navigate('/chat')
               }
               setLoading(false)
             }).catch((err) => {        
