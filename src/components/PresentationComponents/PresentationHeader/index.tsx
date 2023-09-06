@@ -1,29 +1,36 @@
-import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
-import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
-import { Stack } from '@mui/material';
-import LockOpenIcon from '@mui/icons-material/LockOpen';
-import { useNavigate } from 'react-router-dom';
+import * as React from "react";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import Menu from "@mui/material/Menu";
+import MenuIcon from "@mui/icons-material/Menu";
+import Container from "@mui/material/Container";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import Tooltip from "@mui/material/Tooltip";
+import MenuItem from "@mui/material/MenuItem";
+import AdbIcon from "@mui/icons-material/Adb";
+import { ButtonGroup, Stack } from "@mui/material";
+import LockOpenIcon from "@mui/icons-material/LockOpen";
+import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 // import robot from '../images/robot.png'
 
 // const pages = ['Products', 'Pricing', 'Blog'];
-const pages : Array<string>= [];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const pages: Array<string> = [];
+const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function PresentationHeader() {
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
+    null
+  );
+  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
+    null
+  );
+
+  const access_token: string | undefined = Cookies.get("access_token");
 
   const navigate = useNavigate();
 
@@ -43,10 +50,10 @@ function PresentationHeader() {
   };
 
   return (
-    <AppBar position="static" sx={{background: '#EFEFEF', color: '#222222'}}>
+    <AppBar position="static" sx={{ background: "#EFEFEF", color: "#222222" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-           {/* <Ima */}
+          {/* <Ima */}
           {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
           {/* <Avatar alt="" src={robot} sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
           <Typography
@@ -56,44 +63,46 @@ function PresentationHeader() {
             href="/"
             sx={{
               mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
+              display: { xs: "none", md: "flex" },
+              fontFamily: "monospace",
               fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
+              letterSpacing: ".3rem",
+              color: "inherit",
+              textDecoration: "none",
             }}
           >
             Boston the Edubot
           </Typography>
 
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-            {pages.length !== 0 && <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>}
+          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+            {pages.length !== 0 && (
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleOpenNavMenu}
+                color="inherit"
+              >
+                <MenuIcon />
+              </IconButton>
+            )}
             <Menu
               id="menu-appbar"
               anchorEl={anchorElNav}
               anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
+                vertical: "bottom",
+                horizontal: "left",
               }}
               keepMounted
               transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
+                vertical: "top",
+                horizontal: "left",
               }}
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
               sx={{
-                display: { xs: 'block', md: 'none' },
+                display: { xs: "block", md: "none" },
               }}
             >
               {pages.map((page) => (
@@ -103,7 +112,7 @@ function PresentationHeader() {
               ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+          <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
           <Typography
             variant="h5"
             noWrap
@@ -111,23 +120,23 @@ function PresentationHeader() {
             href="/"
             sx={{
               mr: 2,
-              display: { xs: 'flex', md: 'none' },
+              display: { xs: "flex", md: "none" },
               flexGrow: 1,
-              fontFamily: 'monospace',
+              fontFamily: "monospace",
               fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
+              letterSpacing: ".3rem",
+              color: "inherit",
+              textDecoration: "none",
             }}
           >
             Edubot
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
+                sx={{ my: 2, color: "white", display: "block" }}
               >
                 {page}
               </Button>
@@ -135,12 +144,24 @@ function PresentationHeader() {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <Stack spacing={2} direction="row">
-                <Button variant="text" sx={{ color: '#222222'}}
-                onClick={() => navigate('/login')}><LockOpenIcon sx={{mr: 1}}/> Login</Button>
-                <Button variant="contained"
-                onClick={() => navigate('/signup')}>SignUp</Button>
-            </Stack>
+            {Boolean(access_token) ? (
+              <Button variant="contained" onClick={() => navigate("/chat")}>
+                Continue studying
+              </Button>
+            ) : (
+              <Stack spacing={2} direction="row">
+                <Button
+                  variant="text"
+                  sx={{ color: "#222222" }}
+                  onClick={() => navigate("/login")}
+                >
+                  <LockOpenIcon sx={{ mr: 1 }} /> Login
+                </Button>
+                <Button variant="contained" onClick={() => navigate("/signup")}>
+                  SignUp
+                </Button>
+              </Stack>
+            )}
             {/* <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
