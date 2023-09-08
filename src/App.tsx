@@ -56,6 +56,9 @@ function App() : JSX.Element {
         </Routes>
       
       </Router>
+      <style>
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,600&display=swap');
+      </style>
     </Provider>
   );
 }
