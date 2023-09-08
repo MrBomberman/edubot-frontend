@@ -30,7 +30,6 @@ const steps = [
 function MainMessageBlock() {
 
     const matches = useMediaQuery('(min-width:600px)');
-    console.log(matches)
   return (
     <Box sx={{background: `url(${backgroundMainImage})`, backgroundSize: 'cover',
     backgroundPosition: '50% 50%',
