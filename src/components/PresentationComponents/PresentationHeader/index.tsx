@@ -50,7 +50,8 @@ function PresentationHeader() {
   };
 
   return (
-    <AppBar position="static" sx={{ background: "#EFEFEF", color: "#222222" }}>
+    <AppBar position="fixed" sx={{ background: "#EFEFEF", color: "#222222" , height: '64px',
+    fontFamily: "DM Sans"}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           {/* <Ima */}
@@ -64,8 +65,8 @@ function PresentationHeader() {
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
-              fontWeight: 700,
+              fontFamily: "DM Sans",
+              fontWeight: 600,
               letterSpacing: ".3rem",
               color: "inherit",
               textDecoration: "none",
@@ -145,19 +146,21 @@ function PresentationHeader() {
 
           <Box sx={{ flexGrow: 0 }}>
             {Boolean(access_token) ? (
-              <Button variant="contained" onClick={() => navigate("/chat")}>
+              <Button variant="contained" onClick={() => navigate("/chat")}
+              sx={{fontFamily: "DM Sans",}}>
                 Continue studying
               </Button>
             ) : (
               <Stack spacing={2} direction="row">
                 <Button
                   variant="text"
-                  sx={{ color: "#222222" }}
+                  sx={{ color: "#222222" , fontFamily: "DM Sans",}}
                   onClick={() => navigate("/login")}
                 >
                   <LockOpenIcon sx={{ mr: 1 }} /> Login
                 </Button>
-                <Button variant="contained" onClick={() => navigate("/signup")}>
+                <Button variant="contained" onClick={() => navigate("/signup")}
+                sx={{fontFamily: "DM Sans",}}>
                   SignUp
                 </Button>
               </Stack>
