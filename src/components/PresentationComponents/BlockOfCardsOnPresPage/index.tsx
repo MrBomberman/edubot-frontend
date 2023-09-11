@@ -1,6 +1,6 @@
 import { Box, Grid } from "@mui/material";
 import ResponsiveCard from "../../../shared/common/ResponsiveCard";
-import useMediaQuery from "@mui/material/useMediaQuery";
+// import useMediaQuery from "@mui/material/useMediaQuery";
 
 const steps = [
   {
@@ -24,7 +24,7 @@ const steps = [
 export default function BlockOfCardsOnPresPage() {
 
   return (
-    <Box sx={{ marginTop: 15 }}>
+    <Box sx={{ marginTop: 5 }}>
       <Box component={"h2"} sx={{ textAlign: "center", fontFamily: "DM Sans" }}>
         What can you get with Boston the Edubot?
       </Box>
