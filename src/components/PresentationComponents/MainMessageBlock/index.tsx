@@ -6,6 +6,7 @@ import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import StepContent from '@mui/material/StepContent';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import { TypeAnimation } from 'react-type-animation';
 
 const steps = [
     {
@@ -51,7 +52,21 @@ function MainMessageBlock() {
               }}
               component={"h3"}
             >
-              <Typography sx={{ fontSize: '2.5rem', fontWeight: 600, maxWidth: '650px'}}>WELCOME TO BOSTON THE EDUBOT !</Typography>
+              <TypeAnimation
+                sequence={[
+                    'WELCOME TO BOSTON THE EDUBOT!'
+                , 1000,
+                'WELCOME!'
+                , 1000,
+                'WELCOME TO BOSTON THE EDUBOT!'
+                , 1000]}
+                wrapper="span"
+                speed={20}
+                style={{ fontSize: '2.3rem', fontWeight: 600, maxWidth: '650px'}}
+                deletionSpeed={20}
+                repeat={Infinity}
+                >
+                </TypeAnimation>
               <Box 
               sx={{ fontWeight: 200,fontSize: '1rem'}}>Your premier AI guide tailored specifically for high school students pursuing the Cambridge curriculum. 
               Dive into a personalized learning experience like no other.</Box>
