@@ -43,7 +43,7 @@ export default function ResponsiveCard({title, text, responsiveCard} : InfoCardO
   const matches = useMediaQuery('(min-width:1150px)');
   const matchesMinWidthMediumScreen = useMediaQuery("(min-width:900px)");
   return (
-    <Card sx={{ maxWidth: 345, maxHeight: !matches ? 200 : 300, overflowY: 'auto' , minHeight: 200, display: 'flex', justifyContent: 'center',
+    <Card sx={{ maxWidth: 345, maxHeight: !matches ? 270 : 300, overflowY: 'auto' , minHeight: 200, display: 'flex', justifyContent: 'center',
   flexDirection: 'column', m: !matchesMinWidthMediumScreen ? 3 : 1.5}}
     onClick={handleExpandClick}>
       <CardHeader
