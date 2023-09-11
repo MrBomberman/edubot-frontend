@@ -26,12 +26,12 @@ import ModalWindow from '../shared/common/ModalWindow';
 function Copyright(props: any) {
     return (
       <Typography variant="body2" color="text.secondary" align="center" {...props}>
-        {'Copyright © '}
+        {'© '}
+        {new Date().getFullYear()}{' '}
         <Link color="inherit" to="/">
-            EduBot
-        </Link>{' '}
-        {new Date().getFullYear()}
-        {'.'}
+          Boston the Edubot
+        </Link>{'. '}
+        All rights reserved.
       </Typography>
     );
   }
