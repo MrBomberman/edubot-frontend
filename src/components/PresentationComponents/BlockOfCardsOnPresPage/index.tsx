@@ -39,7 +39,7 @@ export default function BlockOfCardsOnPresPage() {
           justifyContent: "center",
         }}
       >
-        {steps.map((label, i) => {
+        {steps.map((label) => {
           return (
             <Grid
               item
