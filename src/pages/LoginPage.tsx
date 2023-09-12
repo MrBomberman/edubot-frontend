@@ -25,12 +25,12 @@ import { Button } from '@mui/material';
 function Copyright(props: any) {
     return (
       <Typography variant="body2" color="text.secondary" align="center" {...props}>
-        {'Copyright © '}
-        <Link color="inherit" to="https://mui.com/">
-            EduBot
-        </Link>{' '}
-        {new Date().getFullYear()}
-        {'.'}
+        {'© '}
+        {new Date().getFullYear()}{' '}
+        <Link color="inherit" to="/">
+          Boston the Edubot
+        </Link>{'. '}
+        All rights reserved.
       </Typography>
     );
   }
@@ -72,7 +72,7 @@ export default function LoginPage() {
                 Cookies.set('username', login);
                 Cookies.set('access_token', res.msg.access_token);
                 Cookies.set('refresh_token', res.msg.refresh_token);
-                navigate('/home')
+                navigate('/chat')
               }
               setLoading(false)
             }).catch((err) => {        

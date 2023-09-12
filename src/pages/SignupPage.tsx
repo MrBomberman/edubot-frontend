@@ -26,12 +26,12 @@ import ModalWindow from '../shared/common/ModalWindow';
 function Copyright(props: any) {
     return (
       <Typography variant="body2" color="text.secondary" align="center" {...props}>
-        {'Copyright © '}
-        <Link color="inherit" to="https://enchanting-dodol-d8f05f.netlify.app/login">
-            EduBot
-        </Link>{' '}
-        {new Date().getFullYear()}
-        {'.'}
+        {'© '}
+        {new Date().getFullYear()}{' '}
+        <Link color="inherit" to="/">
+          Boston the Edubot
+        </Link>{'. '}
+        All rights reserved.
       </Typography>
     );
   }
@@ -104,7 +104,7 @@ export default function SignupPage() {
                 Cookies.set('username', login);
                 Cookies.set('access_token', res.msg.access_token);
                 Cookies.set('refresh_token', res.msg.refresh_token);
-                navigate('/home')
+                navigate('/chat')
               }
               setLoginLoading(false)
             })

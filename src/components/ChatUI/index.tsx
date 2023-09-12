@@ -36,7 +36,7 @@ const ChatUI = () => {
   const handleClose = () => setOpenModal(false)
   const [errorMessage, setErrorMessage] = useState<string>('');
 
-  const messages = JSON.parse(sessionStorage.getItem('messages') ||
+  const messages = JSON.parse(localStorage.getItem('messages') ||
    `[{ "content": "Hello dear ${Cookies.get('username')}, welcome to your personalized tutoring program. I am Boston the Edubot, I will guide you to excel and be among the top 1% of students worldwide. My main focus is the Cambridge Academic math program, preparing you for IGCSE exams. Together we will be crafting examples around your interests for effective learning. Before we dig deep into exploring the world of mathematics, I'd like to conduct a quick quiz. This will help me understand your current level of mastery in Math and tailor my tutoring to your needs. Are you ready to start the quiz?", "role": "assistant" }]`);
 
   const messageBlockRef = useRef({scrollTo, scrollHeight: 0});
@@ -48,7 +48,7 @@ const ChatUI = () => {
         try {
           setLoading(true)
           messages.push({content: input, role: 'user'})
-          sessionStorage.setItem('messages', JSON.stringify([...messages, {content: 'Loading...', role: 'assistant'}]))
+          localStorage.setItem('messages', JSON.stringify([...messages, {content: 'Loading...', role: 'assistant'}]))
           postMessage("https://bostonbackendengine-sc4x4pjhiq-uc.a.run.app/api/v1/boston/chatbot-reference", messages)
             .then((res : any) => {
               messageBlockRef.current.scrollTo(0, messageBlockRef.current.scrollHeight);
@@ -64,7 +64,7 @@ const ChatUI = () => {
               const textMessageObj = res.filter((item : any) => item.role == 'assistant');
               const messageFromBot = {content: textMessageObj[0].content, role: textMessageObj[0].role};
               messages.push(messageFromBot)
-              sessionStorage.setItem('messages', JSON.stringify(messages))
+              localStorage.setItem('messages', JSON.stringify(messages))
               setLoading(false);
               dispatch({type: UPDATE_BOOK_IMAGE_LOADING, payload: true})
               return new Promise((resolve) => {
@@ -74,12 +74,12 @@ const ChatUI = () => {
               dispatch({type: UPDATE_SLIDER_IMAGES, payload: pages})
               // TODO ---------------------
               // if(pages.length > 0) {
-              //   sessionStorage.setItem('pages', JSON.stringify(pages))
+              //   localStorage.setItem('pages', JSON.stringify(pages))
               // }
               dispatch({type: UPDATE_BOOK_IMAGE_LOADING, payload: false})
             }).catch((err : any) => {
               messages.pop();
-              sessionStorage.setItem('messages', JSON.stringify(messages))
+              localStorage.setItem('messages', JSON.stringify(messages))
               setLoading(false);
               setOpenModal(true)
               setErrorMessage(err.message)
@@ -114,7 +114,7 @@ const ChatUI = () => {
         try {
           setLoading(true)
           messages.push({content: input, role: 'user'})
-          sessionStorage.setItem('messages', JSON.stringify([...messages, {content: 'Loading...', role: 'assistant'}]))
+          localStorage.setItem('messages', JSON.stringify([...messages, {content: 'Loading...', role: 'assistant'}]))
           messageBlockRef?.current.scrollTo(0, messageBlockRef?.current.scrollHeight)
           postMessage("https://bostonbackendengine-sc4x4pjhiq-uc.a.run.app/api/v1/boston/chatbot-reference", messages)
             .then((res : any) => {
@@ -132,7 +132,7 @@ const ChatUI = () => {
               const textMessageObj = res.filter((item : any) => item.role == 'assistant');
               const messageFromBot = {content: textMessageObj[0].content, role: textMessageObj[0].role};
               messages.push(messageFromBot)
-              sessionStorage.setItem('messages', JSON.stringify(messages))
+              localStorage.setItem('messages', JSON.stringify(messages))
               setLoading(false);
               dispatch({type: UPDATE_BOOK_IMAGE_LOADING, payload: true})
               return new Promise((resolve) => {
@@ -142,12 +142,12 @@ const ChatUI = () => {
               dispatch({type: UPDATE_SLIDER_IMAGES, payload: pages})
               // TODO ---------------------
               // if(pages.length > 0) {
-              //   sessionStorage.setItem('pages', JSON.stringify(pages))
+              //   localStorage.setItem('pages', JSON.stringify(pages))
               // }
               dispatch({type: UPDATE_BOOK_IMAGE_LOADING, payload: false})
             }).catch((err : any) => {
               messages.pop();
-              sessionStorage.setItem('messages', JSON.stringify(messages))
+              localStorage.setItem('messages', JSON.stringify(messages))
               setLoading(false);
               setOpenModal(true);
               setErrorMessage(err.message)

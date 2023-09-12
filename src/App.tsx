@@ -1,5 +1,9 @@
 import { Provider } from "react-redux";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom"
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+} from "react-router-dom";
 // import CircleLoader from "./components/CircleLoader";
 // import NavigationPanel from "./components/NavigationPanel";
 // import PrivateRoute from "./components/PrivateRoute";
@@ -8,31 +12,42 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import LoginPage from "./pages/LoginPage";
 import routerUrls from "./constants/routerUrls";
 import SignupPage from "./pages/SignupPage";
-import StudyEdubotHome from "./pages/StudyEdubotHome.tsx";
+import StudyEdubotChat from "./pages/StudyEdubotChat.tsx";
 // import PageWithListOfAnyStatusKVGroup from "./pages/PageWithListOfAnyStatusKVGroup";
 // import NotFound from "./pages/NotFound";
-import {store} from './store/store.ts'
+import { store } from "./store/store.ts";
 import PrivateRoute from "./components/PrivateRoute/index.tsx";
 import PageNotFound from "./pages/PageNotFound.tsx";
+import PresentationPage from "./pages/PresentationPage.tsx";
+import Theme from "./theme/index.tsx";
 
-
-function App() : JSX.Element {
+function App(): JSX.Element {
   return (
     <Provider store={store}>
-      <Router>
-        <Routes>
+      <Theme>
+        <Router>
+          <Routes>
+            <Route path="/" element={<PresentationPage />} />
 
-          <Route path="/" element={<Navigate to="/home" />}/>
+            <Route
+              path={routerUrls.chat}
+              element={
+                <PrivateRoute>
+                  <StudyEdubotChat />
+                </PrivateRoute>
+              }
+            />
 
-          <Route path={routerUrls.home} element={<PrivateRoute><StudyEdubotHome/></PrivateRoute>}/>
+            <Route path={routerUrls.authLogin} element={<LoginPage />} />
 
-          <Route path={routerUrls.authLogin} element={<LoginPage/>} />
+            <Route
+              path={routerUrls.authRegistration}
+              element={<SignupPage />}
+            />
 
-          <Route path={routerUrls.authRegistration} element={<SignupPage/>}/>
+            <Route path="*" element={<PageNotFound />} />
 
-          <Route path="*" element={<PageNotFound/>} />
-
-          {/* <Route path='/new' element={<PrivateRoute>
+            {/* <Route path='/new' element={<PrivateRoute>
             <PageWithListOfAnyStatusKVGroup statusPage={'New'}/>
           </PrivateRoute>} />       
 
@@ -51,10 +66,14 @@ function App() : JSX.Element {
           <Route exact path='/history' element={<PrivateRoute><HistoryPage/></PrivateRoute>} />
 
           <Route exact path='/keygroup/:id' element={<PrivateRoute><KVGroupPage/></PrivateRoute>} /> */}
-          {/* <Route path='*' element={<NotFound/>}/> */}
-        </Routes>
-      
-      </Router>
+            {/* <Route path='*' element={<NotFound/>}/> */}
+          </Routes>
+        </Router>
+        <style>
+          @import
+          url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,600&display=swap');
+        </style>
+      </Theme>
     </Provider>
   );
 }

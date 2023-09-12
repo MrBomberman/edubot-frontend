@@ -13,7 +13,7 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-export default function StudyEdubotHome() {
+export default function StudyEdubotChat() {
   return (
     <Box sx={{ blockSize: 'auto', marginTop: '1em'}}>
       <Grid container spacing={2}>
