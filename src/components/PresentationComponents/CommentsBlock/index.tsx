@@ -113,9 +113,6 @@ export default function CommentsBlock() {
                         <Collapse in={openIndex === i} timeout='auto'>
                         <List component="div" disablePadding>
                             <ListItemButton sx={{ pl: 4 }}>
-                            <ListItemIcon>
-                                <StarBorder />
-                            </ListItemIcon>
                             <ListItemText primary={item.description}/>
                             </ListItemButton>
                         </List>
