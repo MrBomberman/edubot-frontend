@@ -45,7 +45,7 @@ function MainMessageBlock() {
             justifyContent: "center",
           }}
         >
-          <Box sx={matches ? { textAlign: "left",  maxWidth: 650 } : { textAlign: "center", maxWidth: 650 }}>
+          <Box sx={matches ? { textAlign: "left",  maxWidth: 650, minWidth: '150px' } : { textAlign: "center", maxWidth: 650, minWidth: '150px' }}>
             <Box
               sx={{
                 fontFamily: "DM Sans"
@@ -54,7 +54,7 @@ function MainMessageBlock() {
             >
               <TypeAnimation
                 sequence={[
-                    'WELCOME TO BOSTON THE EDUBOT!'
+                'WELCOME TO BOSTON THE EDUBOT!'
                 , 1000,
                 'WELCOME!'
                 , 1000,
