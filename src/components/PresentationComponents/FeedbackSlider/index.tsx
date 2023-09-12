@@ -46,14 +46,14 @@ export default function FeedbackSlider() {
           alignItems: 'center',
           height: 50,
           pl: 2,
-          bgcolor: '#fff',
+          bgcolor: theme.palette.background.paper,
           borderRadius: '4px 4px 0 0',
           boxShadow: '0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14)'
         }}
       >
         <Typography sx={{fontFamily: 'DM Sans'}}>{steps[activeStep].label}</Typography>
       </Paper>
-      <Box sx={{ height: 205, maxWidth: matches ? 450 : 320, p: 2 , bgcolor: '#fff', whiteSpace: 'break-space'}}>
+      <Box sx={{ height: 205, maxWidth: matches ? 450 : 320, p: 2 , bgcolor: theme.palette.background.paper , whiteSpace: 'break-space'}}>
         {steps[activeStep].description}
       </Box>
       <MobileStepper
@@ -62,6 +62,7 @@ export default function FeedbackSlider() {
         position="static"
         activeStep={activeStep}
         sx={{borderRadius: '0 0 4px 4px',
+        bgcolor: theme.palette.background.paper,
         boxShadow: '0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)'}}
         nextButton={
           <Button

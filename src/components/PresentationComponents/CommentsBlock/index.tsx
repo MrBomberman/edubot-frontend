@@ -1,4 +1,4 @@
-import { Box, Grid,Typography , Button, Divider} from "@mui/material";
+import { Box, Grid,Typography , Button} from "@mui/material";
 import { useState } from "react";
 import FeedbackSlider from "../FeedbackSlider";
 import backgroundMainImage from "../../../images/gradient-haikei.png";

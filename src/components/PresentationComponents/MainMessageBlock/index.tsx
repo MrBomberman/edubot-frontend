@@ -82,7 +82,7 @@ function MainMessageBlock() {
 
         <Box sx={{ maxWidth: 400 }}>
             <Stepper orientation="vertical">
-                {steps.map((step, index) => (
+                {steps.map((step) => (
                 <Step key={step.label} active>
                     <StepLabel 
                     >
