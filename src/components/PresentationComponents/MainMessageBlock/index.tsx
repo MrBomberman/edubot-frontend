@@ -45,7 +45,7 @@ function MainMessageBlock() {
             justifyContent: "center",
           }}
         >
-          <Box sx={matches ? { textAlign: "left",  maxWidth: 650, minWidth: '150px' } : { textAlign: "center", maxWidth: 650, minWidth: '150px' }}>
+          <Box sx={matches ? { textAlign: "left",  maxWidth: 650, minWidth: '270px' } : { textAlign: "center", maxWidth: 650, minWidth: '270px' }}>
             <Box
               sx={{
                 fontFamily: "DM Sans"
