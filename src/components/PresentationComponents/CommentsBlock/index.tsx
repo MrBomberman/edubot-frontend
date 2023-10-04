@@ -32,6 +32,7 @@ const faqInfo = [
 
 export default function CommentsBlock() {
   const matches = useMediaQuery("(min-width:900px)");
+  const minWidthMatch = useMediaQuery("(min-width:600px)");
 
   const navigate = useNavigate();
   const [openIndex, setOpen] = useState();
@@ -55,7 +56,7 @@ export default function CommentsBlock() {
         container
         spacing={4}
         sx={{
-          p: 5,
+          p: minWidthMatch ? 5 : 2,
         }}
       >
         <Grid

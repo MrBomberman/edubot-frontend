@@ -34,7 +34,7 @@ function MainMessageBlock() {
   return (
     <Box sx={{background: `url(${backgroundMainImage})`, backgroundSize: 'cover',
     backgroundPosition: '50% 50%',
-     mt: '64px'}}>
+     mt: matches ? '64px' : '56px'}}>
       <Grid container sx={{minHeight: "800px", p: 5,}}>
         <Grid
           item
