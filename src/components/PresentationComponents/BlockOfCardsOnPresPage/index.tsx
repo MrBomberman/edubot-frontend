@@ -25,7 +25,7 @@ export default function BlockOfCardsOnPresPage() {
 
   return (
     <Box sx={{ marginTop: 5 }}>
-      <Box component={"h2"} sx={{ textAlign: "center", fontFamily: "DM Sans" }}>
+      <Box component={"h2"} sx={{ textAlign: "center", fontFamily: "DM Sans", m: 2 }}>
         What can you get with Boston the Edubot?
       </Box>
       <Grid
