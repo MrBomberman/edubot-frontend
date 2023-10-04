@@ -16,6 +16,7 @@ import { Stack } from "@mui/material";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import useMediaQuery from '@mui/material/useMediaQuery';
 // import robot from '../images/robot.png'
 
 // const pages = ['Products', 'Pricing', 'Blog'];
@@ -49,8 +50,9 @@ function PresentationHeader() {
   //   setAnchorElUser(null);
   // };
 
+  const matches = useMediaQuery('(min-width:600px)');
   return (
-    <AppBar position="fixed" sx={{ background: "#EFEFEF", color: "#222222" , height: '64px',
+    <AppBar position="fixed" sx={{ background: "#EFEFEF", color: "#222222" , height: matches ? '64px' : '56px',
     fontFamily: "DM Sans"}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
