@@ -61,9 +61,9 @@ function MainMessageBlock() {
                 'WELCOME TO BOSTON THE EDUBOT!'
                 , 1000]}
                 wrapper="span"
-                speed={20}
+                speed={1}
                 style={{ fontSize: '2.3rem', fontWeight: 600, maxWidth: '650px'}}
-                deletionSpeed={20}
+                deletionSpeed={1}
                 repeat={Infinity}
                 >
                 </TypeAnimation>
